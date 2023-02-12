@@ -50,7 +50,7 @@ extension StringExtn on String? {
   /// ```
   String get onlyNumbers {
     if (this == null) return '';
-    return this!.replaceAll(RegExp(r'[/D]'), "");
+    return this!.replaceAll(RegExp(r'[\D]'), "");
   }
 
   /// Formats a valid phone number.
@@ -74,5 +74,13 @@ extension StringExtn on String? {
       default:
         return data;
     }
+  }
+
+  /// Evaluates if this string is a valid email address.
+  bool get isEmail {
+    if (this == null) return false;
+    return RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(this!);
   }
 }

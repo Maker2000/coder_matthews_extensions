@@ -1,12 +1,14 @@
 extension NullableListExtn<T> on Iterable<T>? {
   /// Checks if given list contains an element of the given type [T]
-  bool containsElement(T Function() f) {
-    if (this == null) return false;
-    for (T e in this!) {
-      if (e == f.call()) return true;
-    }
-    return false;
-  }
+
+  // TODO: revisit [containsElement] function
+  // bool containsElement(T Function() f) {
+  //   if (this == null) return false;
+  //   for (T e in this!) {
+  //     if (e == f()) return true;
+  //   }
+  //   return false;
+  // }
 
   /// Checks if one or more elements in list passes the pridicate [f]
   ///
@@ -33,15 +35,7 @@ extension NullableListExtn<T> on Iterable<T>? {
   bool compoundAnd(bool Function(T e) f) {
     if (this == null) return false;
     return this!
-        .fold(false, (previousValue, element) => previousValue && f(element));
-  }
-
-  /// Returns a new [Iterable] with no null values.
-  ///
-  ///  If [Iterable] is null, an empty [Iterable] is returned.
-  Iterable<T> get removeNulls {
-    if (this == null) return <T>[];
-    return this!.where((element) => element != null);
+        .fold(true, (previousValue, element) => previousValue && f(element));
   }
 
   /// Calculates the sum of a collection of [T] elements.
@@ -61,7 +55,7 @@ extension NullableListExtn<T> on Iterable<T>? {
   /// final total = valueList.sum((element) => element);
   /// print(total); // 5
   /// ```
-  num sum(num Function(T) sumFunction) {
+  num sum(num Function(T element) sumFunction) {
     if (this == null) return 0;
     return this!.fold(
       0,
@@ -236,5 +230,19 @@ extension ListExtn<T> on Iterable<T> {
         first,
         (previousValue, element) =>
             number(previousValue) < number(element) ? previousValue : element);
+  }
+}
+
+extension NullableListExtn2<T> on Iterable<T?>? {
+  /// Returns a new [Iterable] with no null values.
+  ///
+  ///  If [Iterable] is null, an empty [Iterable] is returned.
+  Iterable<T> get removeNulls {
+    var returnList = <T>[];
+    if (this == null) return returnList;
+    for (var element in this!) {
+      if (element != null) returnList.add(element);
+    }
+    return returnList;
   }
 }
