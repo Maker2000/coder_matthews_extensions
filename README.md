@@ -1,39 +1,53 @@
-<!-- 
+<!--
 This README describes the package. If you publish this package to pub.dev,
 this README's contents appear on the landing page for your package.
 
 For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
 
 For general information about developing packages, see the Dart guide for
 [creating packages](https://dart.dev/guides/libraries/create-library-packages)
 and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
+[developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A variety of extensions I use in my projects.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+    Package contains extensions for lists and strings.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+No setup required, just import the package.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+### List Extensions
 
 ```dart
-const like = 'sample';
+  final personList = [
+    CoderPerson(name: "Jane", age: 16, gender: Gender.female),
+    CoderPerson(name: 'Bob', age: 20, gender: Gender.male),
+    CoderPerson(name: 'King', age: 56, gender: Gender.male),
+  ];
+
+  final oldestPerson = personList.maxElement((element) => element.age);
+  final youngestPerson = personList.minElement((element) => element.age);
+  final totalAges = personList.sum((element) => element.age);
 ```
 
-## Additional information
+### String Extensions
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```dart
+  var control = '(342) 342-2314';
+  var result = number.toPhoneNumberString;
+
+  String email = 'testemail@mail.com';
+  email.isEmail;
+
+```
+
+Check example folder for more.
+
+## Additional information

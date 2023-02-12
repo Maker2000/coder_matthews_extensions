@@ -141,5 +141,12 @@ void main() {
       var result = number.onlyNumbers;
       expect(result, control);
     });
+
+    test('shouldFormatPhoneNumber', () {
+      var number = '3423422314';
+      var control = '(342) 342-2314';
+      var result = number.toPhoneNumberString;
+      expect(result, control);
+    });
   });
 }

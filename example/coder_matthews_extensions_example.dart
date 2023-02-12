@@ -20,4 +20,18 @@ void main() {
 
   final group = personList.groupBy((e) => e.gender);
   print(group);
+
+  //string examples
+
+  final testerString = 'the Sky IS BluE.';
+  var number = '+1 (342) 342-2314';
+  print(number.onlyNumbers);
+
+  number = '13423422314';
+  print(number.toPhoneNumberString);
+
+  print(
+      'Email: ${personList.first.email}, IsEmail: ${personList.first.email.isEmail}');
+  print(testerString.sentenceCase);
+  print(testerString.titleCase);
 }

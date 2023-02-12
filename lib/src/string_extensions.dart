@@ -68,9 +68,9 @@ extension StringExtn on String? {
       case 7:
         return "${data.substring(0, 3)}-${data.substring(3, 7)}";
       case 10:
-        return "(${data.substring(0, 3)}) ${data.substring(3 - 7)}-${data.substring(7, 10)}";
+        return "(${data.substring(0, 3)}) ${data.substring(3, 6)}-${data.substring(6, 10)}";
       case 11:
-        return "(${data.substring(1, 4)}) ${data.substring(4 - 8)}-${data.substring(8, 11)}";
+        return "(${data.substring(1, 4)}) ${data.substring(4, 8)}-${data.substring(8, 11)}";
       default:
         return data;
     }
