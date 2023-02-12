@@ -1,4 +1,4 @@
-extension ListExtn<T> on Iterable<T>? {
+extension NullableListExtn<T> on Iterable<T>? {
   /// Checks if given list contains an element of the given type [T]
   bool containsElement(T Function() f) {
     if (this == null) return false;
@@ -95,6 +95,56 @@ extension ListExtn<T> on Iterable<T>? {
     return sum(sumFunction) / this!.length;
   }
 
+  /// Returns the maximum value of a collection of [T] elements.
+  ///
+  /// [number] requires a [num] to be returned
+  ///
+  /// Object Example:
+  /// ``` dart
+  /// final valueList = <Map<String, double>>[{"value": 1.3},{"value": 1},{"value": 2.7},];
+  /// final max = valueList.maxValue((element) => element["value"]!);
+  /// print(average); // 2.7
+  /// ```
+  /// List of [double]   Example:
+  /// ``` dart
+  /// final valueList = <double>[1.3, 1, 2.7];
+  /// final max = valueList.max((element) => element);
+  /// print(average); // 2.7
+  /// ```
+  num maxValue(num Function(T value) number) {
+    if (this == null) return 0;
+    if (this!.isEmpty) return 0;
+    return this!.fold(
+        number(this!.first),
+        (previousValue, element) =>
+            previousValue > number(element) ? previousValue : number(element));
+  }
+
+  /// Returns the minumum value of a collection of [T] elements.
+  ///
+  /// [number] requires a [num] to be returned
+  ///
+  /// Object Example:
+  /// ``` dart
+  /// final valueList = <Map<String, double>>[{"value": 1.3},{"value": 1},{"value": 2.7},];
+  /// final max = valueList.minValue((element) => element["value"]!);
+  /// print(average); // 1
+  /// ```
+  /// List of [double]   Example:
+  /// ``` dart
+  /// final valueList = <double>[1.3, 1, 2.7];
+  /// final max = valueList.minValue((element) => element);
+  /// print(average); // 1
+  /// ```
+  num minValue(num Function(T value) number) {
+    if (this == null) return 0;
+    if (this!.isEmpty) return 0;
+    return this!.fold(
+        number(this!.first),
+        (previousValue, element) =>
+            previousValue < number(element) ? previousValue : number(element));
+  }
+
   /// Groups a collection and returns a list of [Map<K, List<T>>] elements.
   /// The Collection gets grouped by [K]
   ///
@@ -132,5 +182,59 @@ extension ListExtn<T> on Iterable<T>? {
         <K, List<T>>{},
         (Map<K, List<T>> map, T element) =>
             map..putIfAbsent(keyFunction(element), () => <T>[]).add(element));
+  }
+}
+
+extension ListExtn<T> on Iterable<T> {
+  /// Returns the maximum [Element] of a collection of [T] elements.
+  ///
+  /// [number] requires a [num] to be returned. Throws [UnsupportedError] if list is empty
+  ///
+  /// Object Example:
+  /// ``` dart
+  /// final valueList = <Map<String, double>>[{"value": 1.3},{"value": 1},{"value": 2.7},];
+  /// final max = valueList.maxElement((element) => element["value"]!);
+  /// print(average); // {"value": 2.7}
+  /// ```
+  /// List of [double]   Example:
+  /// ``` dart
+  /// final valueList = <double>[1.3, 1, 2.7];
+  /// final max = valueList.max((element) => element);
+  /// print(average); // 2.7
+  /// ```
+  T maxElement(num Function(T element) number) {
+    if (isEmpty) {
+      throw UnsupportedError('Cannot use this function on empty list');
+    }
+    return fold(
+        first,
+        (previousValue, element) =>
+            number(previousValue) > number(element) ? previousValue : element);
+  }
+
+  /// Returns the minumum [Element] of a collection of [T] elements.
+  ///
+  /// [number] requires a [num] to be returned. Throws [UnsupportedError] if list is empty
+  ///
+  /// Object Example:
+  /// ``` dart
+  /// final valueList = <Map<String, double>>[{"value": 1.3},{"value": 1},{"value": 2.7},];
+  /// final max = valueList.maxElement((element) => element["value"]!);
+  /// print(average); // {"value": 1}
+  /// ```
+  /// List of [double]   Example:
+  /// ``` dart
+  /// final valueList = <double>[1.3, 1, 2.7];
+  /// final max = valueList.max((element) => element);
+  /// print(average); // 1
+  /// ```
+  T minElement(num Function(T element) number) {
+    if (isEmpty) {
+      throw UnsupportedError('Cannot use this function on empty list');
+    }
+    return fold(
+        first,
+        (previousValue, element) =>
+            number(previousValue) < number(element) ? previousValue : element);
   }
 }

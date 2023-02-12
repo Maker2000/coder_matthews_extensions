@@ -4,5 +4,7 @@
 library coder_matthews_extensions;
 
 export 'src/coder_matthews_extensions_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.
+export 'src/string_extensions.dart';
+export 'src/date_extensions.dart';
+export 'src/list_extensions.dart';
+export 'src/map_extensions.dart';

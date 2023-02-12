@@ -11,14 +11,68 @@ extension StringExtn on String? {
     return this!.isNotEmpty;
   }
 
-  /// Returns the sentence case of a string value.
+  /// Returns the sentence case of this string value.
   /// Example:
   /// ```dart
   /// String sentence = 'example Sentence.';
-  /// debugPrint('${sentence.toSentenceCase}') //prints 'Example sentence.'
+  /// debugPrint('${sentence.sentenceCase}') //prints 'Example sentence.'
   /// ```
-  String get toSentenceCase {
+  String get sentenceCase {
     if (this == null) return '';
-    return this![0].toUpperCase() + this!.substring(1).toLowerCase();
+    return this!.isNotEmpty
+        ? '${this![0].toUpperCase()}${this!.substring(1).toLowerCase()}'
+        : '';
+  }
+
+  /// Returns the title case of this string value.
+  ///
+  /// Example:
+  /// ```dart
+  /// String sentence = 'example Sentence.';
+  /// debugPrint('${sentence.titleCase}') //prints 'Example Sentence.'
+  /// ```
+  String get titleCase {
+    if (this == null) return "";
+    return this!
+        .replaceAll(RegExp(' +'), ' ')
+        .split(" ")
+        .map((str) => str.sentenceCase)
+        .join(" ");
+  }
+
+  /// Strips string of all charactors except numbers
+  ///
+  /// Example:
+  /// ``` dart
+  /// String phoneNumber = (453) 945-8453;
+  /// String onlyNumbers = phoneNumber.onlyNumbers;
+  /// print(onlyNumbers); // "4539458453"
+  /// ```
+  String get onlyNumbers {
+    if (this == null) return '';
+    return this!.replaceAll(RegExp(r'[/D]'), "");
+  }
+
+  /// Formats a valid phone number.
+  ///
+  /// Formats to:
+  /// - (000) 000-0000
+  /// - 1 (000) 000-0000
+  /// - 000-0000
+  ///
+  /// Returns digits of string this phone number is invalid
+  String get toPhoneNumberString {
+    if (this == null) return '';
+    String data = this!.onlyNumbers;
+    switch (data.length) {
+      case 7:
+        return "${data.substring(0, 3)}-${data.substring(3, 7)}";
+      case 10:
+        return "(${data.substring(0, 3)}) ${data.substring(3 - 7)}-${data.substring(7, 10)}";
+      case 11:
+        return "(${data.substring(1, 4)}) ${data.substring(4 - 8)}-${data.substring(8, 11)}";
+      default:
+        return data;
+    }
   }
 }
