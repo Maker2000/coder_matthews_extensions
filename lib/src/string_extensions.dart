@@ -10,4 +10,15 @@ extension StringExtn on String? {
     if (this == null) return false;
     return this!.isNotEmpty;
   }
+
+  /// Returns the sentence case of a string value.
+  /// Example:
+  /// ```dart
+  /// String sentence = 'example Sentence.';
+  /// debugPrint('${sentence.toSentenceCase}') //prints 'Example sentence.'
+  /// ```
+  String get toSentenceCase {
+    if (this == null) return '';
+    return this![0].toUpperCase() + this!.substring(1).toLowerCase();
+  }
 }
