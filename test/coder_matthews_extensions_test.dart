@@ -149,4 +149,17 @@ void main() {
       expect(result, control);
     });
   });
+
+  group('Map Extension Tests', () {
+    test('shouldRemoveNullsFromMap', () {
+      var testMap = <String, dynamic>{
+        'name': 'Tom',
+        'age': null,
+        'location': 'USA'
+      };
+      var control = <String, dynamic>{'name': 'Tom', 'location': 'USA'};
+      var newMap = testMap.removeNulls;
+      expect(control.entries.length, newMap.entries.length);
+    });
+  });
 }

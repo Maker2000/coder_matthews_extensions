@@ -177,6 +177,17 @@ extension NullableListExtn<T> on Iterable<T>? {
         (Map<K, List<T>> map, T element) =>
             map..putIfAbsent(keyFunction(element), () => <T>[]).add(element));
   }
+
+  /// Searches a list using the given [predicate] and returns the element.
+  /// If not found, it returns null
+  T? firstOrNull(bool Function(T element) predicate) {
+    if (this == null) return null;
+    try {
+      return this!.firstWhere(predicate);
+    } on StateError {
+      return null;
+    }
+  }
 }
 
 extension ListExtn<T> on Iterable<T> {
