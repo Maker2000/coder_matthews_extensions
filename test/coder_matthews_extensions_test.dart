@@ -88,6 +88,13 @@ void main() {
       final sumOfAges = personList.average((element) => element.age);
       expect(sumOfAges, 28);
     });
+
+    test('shouldReturnNull', () {
+      List<CoderPerson> testList = [];
+      testList.addAll(List.of(personList));
+      var result = testList.firstOrNull((element) => element.age == 100);
+      expect(result, null);
+    });
   });
 
   group('String Extension Tests', () {
