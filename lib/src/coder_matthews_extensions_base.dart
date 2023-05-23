@@ -10,3 +10,5 @@ class CoderPerson {
 }
 
 enum Gender { male, female }
+
+enum TestingEnum { longTitle, aTitleToDoTheTest }

@@ -8,3 +8,4 @@ export 'src/string_extensions.dart';
 export 'src/date_extensions.dart';
 export 'src/list_extensions.dart';
 export 'src/map_extensions.dart';
+export 'src/enum_extensions.dart';

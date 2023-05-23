@@ -169,4 +169,11 @@ void main() {
       expect(control.entries.length, newMap.entries.length);
     });
   });
+  group('Enum Extensions', () {
+    test("shouldConvertToTitle", () {
+      var testingEnum = TestingEnum.longTitle;
+      var control = 'Long Title';
+      expect(control, testingEnum.titleCase);
+    });
+  });
 }

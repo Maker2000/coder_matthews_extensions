@@ -1,4 +1,6 @@
 extension StringExtn on String? {
+  static final _splitRegEx = RegExp(r"(?=(?!^)[A-Z])");
+
   ///Returns a bool whether string value is null or empty
   bool get isNullOrEmpty {
     if (this == null) return true;
@@ -82,5 +84,38 @@ extension StringExtn on String? {
     return RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(this!);
+  }
+
+  /// Separates the camelcase word with a [separator] string
+  ///
+  /// Example:
+  /// ```dart
+  /// String sentence = "helloWorld!";
+  /// String splitSentence = sentence.splitCamelCaseWord;
+  /// print(splitSentence); // "hello World!"
+  /// ```
+  ///
+  /// Example with [titleCase]
+  /// ``` dart
+  /// String sentence = "helloWorld!";
+  /// String splitSentence = sentence.splitCamelCaseWord.titleCase;
+  /// print(splitSentence); // "Hello World!"
+  /// ```
+  String splitCamelCaseWord([String separator = " "]) {
+    if (this == null) return "";
+    return this!.split(_splitRegEx).join(separator);
+  }
+
+  /// Separates the camelcase word into a string list
+  ///
+  /// Example:
+  /// ```dart
+  /// String sentence = "helloWorld!";
+  /// String splitSentence = sentence.splitCamelCaseList;
+  /// print(splitSentence); // ["hello", "World!"]
+  /// ```
+  List<String> get splitCamelCaseList {
+    if (this == null) return [];
+    return this!.split(_splitRegEx);
   }
 }
