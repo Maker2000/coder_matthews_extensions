@@ -180,7 +180,7 @@ extension NullableListExtn<T> on Iterable<T>? {
 
   /// Searches a list using the given [predicate] and returns the element.
   /// If not found, it returns null
-  T? firstOrNull(bool Function(T element) predicate) {
+  T? firstWhereOrNull(bool Function(T element) predicate) {
     if (this == null) return null;
     try {
       return this!.firstWhere(predicate);

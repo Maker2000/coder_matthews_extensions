@@ -11,3 +11,7 @@
 
 - Added split camel case funtion to string extensions
 - Added enum extensions
+
+## 1.0.3
+
+- **BREAKING CHANGE**: renamed firstOrNull to firstWhereOrNull for list extensions

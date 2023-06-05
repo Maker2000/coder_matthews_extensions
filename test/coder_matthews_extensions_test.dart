@@ -92,7 +92,7 @@ void main() {
     test('shouldReturnNull', () {
       List<CoderPerson> testList = [];
       testList.addAll(List.of(personList));
-      var result = testList.firstOrNull((element) => element.age == 100);
+      var result = testList.firstWhereOrNull((element) => element.age == 100);
       expect(result, null);
     });
   });
