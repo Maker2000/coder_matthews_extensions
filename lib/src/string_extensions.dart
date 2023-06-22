@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 extension StringExtn on String? {
   static final _splitRegEx = RegExp(r"(?=(?!^)[A-Z])");
 
@@ -117,5 +119,11 @@ extension StringExtn on String? {
   List<String> get splitCamelCaseList {
     if (this == null) return [];
     return this!.split(_splitRegEx);
+  }
+
+  /// Returns a json object that the encoded string is
+  Map<String, dynamic> get toDecodedJson {
+    if (isNullOrEmpty) return {};
+    return jsonDecode(this!);
   }
 }
