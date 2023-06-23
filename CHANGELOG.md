@@ -15,3 +15,7 @@
 ## 1.0.3
 
 - **BREAKING CHANGE**: renamed firstOrNull to firstWhereOrNull for list extensions
+
+## 1.0.4
+
+- added toJsonEncodedString to map extensions and toDecodedJson to string entensions for converting to and from json
