@@ -188,6 +188,24 @@ extension NullableListExtn<T> on Iterable<T>? {
       return null;
     }
   }
+
+  ///Returns an [Iterable] of [T] elements with the [element] is added between each member of the list
+  /// EXample:
+  /// ```dart
+  /// var numbers = [1,2,3];
+  /// print(numbers.addBetween(0)); // prints 1, 0, 2, 0, 3
+  /// ```
+  Iterable<T> addBetween(T element) sync* {
+    if (this == null) yield* [];
+    var ghost = this!;
+    for (var i = 0; i < ghost.length; i++) {
+      if (i == 0) {
+        yield* [ghost.first];
+      } else {
+        yield* [element, ghost.elementAt(i)];
+      }
+    }
+  }
 }
 
 extension ListExtn<T> on Iterable<T> {
