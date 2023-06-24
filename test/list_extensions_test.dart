@@ -80,4 +80,11 @@ void main() {
     var result = testList.firstWhereOrNull((element) => element.age == 100);
     expect(result, null);
   });
+
+  test('shouldAddBetweenElements', () {
+    List<int> numbers = [1, 2, 3];
+    var newNumbers = numbers.addBetween(0);
+    var control = [1, 0, 2, 0, 3];
+    expect(newNumbers, control);
+  });
 }
