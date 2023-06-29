@@ -1,42 +1,16 @@
+import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
+
 extension NullableListExtn<T> on Iterable<T>? {
   /// Checks if given list contains an element of the given type [T]
 
   // TODO: revisit [containsElement] function
   // bool containsElement(T Function() f) {
-  //   if (this == null) return false;
+  //   if (isNull) return false;
   //   for (T e in this!) {
   //     if (e == f()) return true;
   //   }
   //   return false;
   // }
-
-  /// Checks if one or more elements in list passes the pridicate [f]
-  ///
-  /// Example:
-  /// ```dart
-  /// List<String> names = ['Jane', 'Josh', 'George'];
-  /// bool result = names.compoundOr((x) => x.startsWith('J'));
-  /// debugPrint('$result'); //prints true
-  /// ```
-  bool compoundOr(bool Function(T e) f) {
-    if (this == null) return false;
-    return this!
-        .fold(false, (previousValue, element) => previousValue || f(element));
-  }
-
-  /// Checks if all elements in list passes the pridicate [f]
-  ///
-  /// Example
-  /// ```dart
-  /// List<String> names = ['Jane', 'Josh', 'George'];
-  /// bool result = names.compoundAnd((x) => x.startsWith('J'));
-  /// debugPrint('$result'); //prints false
-  /// ```
-  bool compoundAnd(bool Function(T e) f) {
-    if (this == null) return false;
-    return this!
-        .fold(true, (previousValue, element) => previousValue && f(element));
-  }
 
   /// Calculates the sum of a collection of [T] elements.
   ///
@@ -56,7 +30,7 @@ extension NullableListExtn<T> on Iterable<T>? {
   /// print(total); // 5
   /// ```
   num sum(num Function(T element) sumFunction) {
-    if (this == null) return 0;
+    if (isNull) return 0;
     return this!.fold(
       0,
       (previousValue, element) => previousValue + sumFunction(element),
@@ -81,7 +55,7 @@ extension NullableListExtn<T> on Iterable<T>? {
   /// print(average); // 1.6666666666666667
   /// ```
   num average(num Function(T) sumFunction) {
-    if (this == null) return 0;
+    if (isNull) return 0;
     if (this!.isEmpty) {
       throw UnsupportedError(
           'List needs to have elements to perform average calculation');
@@ -106,7 +80,7 @@ extension NullableListExtn<T> on Iterable<T>? {
   /// print(average); // 2.7
   /// ```
   num maxValue(num Function(T value) number) {
-    if (this == null) return 0;
+    if (isNull) return 0;
     if (this!.isEmpty) return 0;
     return this!.fold(
         number(this!.first),
@@ -131,7 +105,7 @@ extension NullableListExtn<T> on Iterable<T>? {
   /// print(average); // 1
   /// ```
   num minValue(num Function(T value) number) {
-    if (this == null) return 0;
+    if (isNull) return 0;
     if (this!.isEmpty) return 0;
     return this!.fold(
         number(this!.first),
@@ -171,7 +145,7 @@ extension NullableListExtn<T> on Iterable<T>? {
   /// */
   /// ```
   Map<K, List<T>> groupBy<K>(K Function(T e) keyFunction) {
-    if (this == null) return <K, List<T>>{};
+    if (isNull) return <K, List<T>>{};
     return this!.fold(
         <K, List<T>>{},
         (Map<K, List<T>> map, T element) =>
@@ -181,7 +155,7 @@ extension NullableListExtn<T> on Iterable<T>? {
   /// Searches a list using the given [predicate] and returns the element.
   /// If not found, it returns null
   T? firstWhereOrNull(bool Function(T element) predicate) {
-    if (this == null) return null;
+    if (isNull) return null;
     try {
       return this!.firstWhere(predicate);
     } on StateError {
@@ -196,7 +170,7 @@ extension NullableListExtn<T> on Iterable<T>? {
   /// print(numbers.addBetween(0)); // prints 1, 0, 2, 0, 3
   /// ```
   Iterable<T> addBetween(T element) sync* {
-    if (this == null) yield* [];
+    if (isNull) yield* [];
     var ghost = this!;
     for (var i = 0; i < ghost.length; i++) {
       if (i == 0) {
@@ -205,6 +179,18 @@ extension NullableListExtn<T> on Iterable<T>? {
         yield* [element, ghost.elementAt(i)];
       }
     }
+  }
+
+  /// Returns a [bool] whether or not this [List] is null or empty
+  bool get isNullOrEmpty {
+    if (isNull) return true;
+    return this!.isEmpty;
+  }
+
+  /// Returns a [bool] whether or not this [List] is not null or empty
+  bool get isNotNullOrEmpty {
+    if (isNull) return false;
+    return this!.isEmpty;
   }
 }
 
@@ -268,7 +254,7 @@ extension NullableListExtn2<T> on Iterable<T?>? {
   ///  If [Iterable] is null, an empty [Iterable] is returned.
   Iterable<T> get removeNulls {
     var returnList = <T>[];
-    if (this == null) return returnList;
+    if (isNull) return returnList;
     for (var element in this!) {
       if (element != null) returnList.add(element);
     }

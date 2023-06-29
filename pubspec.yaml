@@ -1,11 +1,11 @@
 name: coder_matthews_extensions
 description: A collection of useful extensions used in most of my personal projects
 repository: https://github.com/Maker2000/coder_matthews_extensions
-version: 1.0.4
+version: 1.1.0
 # homepage: https://www.example.com
 
 environment:
-  sdk: ">=2.18.4 <3.0.0"
+  sdk: ">=2.18.4 <4.0.0"
 
 # dependencies:
 #   path: ^1.8.0

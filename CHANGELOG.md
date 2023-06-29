@@ -4,19 +4,24 @@
 
 ## 1.0.1
 
-- Added [firstOrNull] function to list extensions
-- Added a [removeNulls] function on map types
+- Added [firstOrNull] function to list extensions.
+- Added a [removeNulls] function on map types.
 
 ## 1.0.2
 
-- Added [splitCamelCase] funtion to string extensions
-- Added enum extensions
+- Added [splitCamelCase] funtion to string extensions.
+- Added enum extensions.
 
 ## 1.0.3
 
-- **BREAKING CHANGE**: renamed [firstOrNull] to [firstWhereOrNull] for list extensions
+- **BREAKING CHANGE**: renamed [firstOrNull] to [firstWhereOrNull] for list extensions.
 
 ## 1.0.4
 
-- added [toJsonEncodedString] to map extensions and [toDecodedJson] to string entensions for converting to and from json
-- added [addBetween] to list extensions
+- added [toJsonEncodedString] to map extensions and [toDecodedJson] to string entensions for converting to and from json.
+- added [addBetween] to list extensions.
+
+## 1.1.0
+- added a new class [ValidationContract] for an exception workflow for validating conditions, null objects and empty/null strings.
+- added an extension on object for checking if any object is null.
+- **BREAKING CHANGE**: removed [compundAnd] and [compoundOr] from list extensions as dart already has a function like it.

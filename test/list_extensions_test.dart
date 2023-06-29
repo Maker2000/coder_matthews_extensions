@@ -38,23 +38,6 @@ void main() {
     expect(group[Gender.female]?.length, 3);
   });
 
-  test('shouldCheckIfAllElementsHasProperty', () {
-    bool allGirlsInList =
-        personList.compoundAnd((e) => e.gender == Gender.female);
-    expect(allGirlsInList, false);
-    allGirlsInList = allGirlsList.compoundAnd((e) => e.gender == Gender.female);
-    expect(allGirlsInList, true);
-  });
-
-  test('shouldCheckIfSomeElementsHasProperty', () {
-    bool someFemalesInList =
-        personList.compoundOr((e) => e.gender == Gender.male);
-    expect(someFemalesInList, true);
-    bool someMalesInList =
-        personList.compoundOr((e) => e.gender == Gender.male);
-    expect(someMalesInList, true);
-  });
-
   test('shouldRemoveNullsFromList', () {
     List<CoderPerson?> testList = [];
     testList.addAll(List.of(personList));

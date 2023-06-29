@@ -35,6 +35,7 @@ No setup required, just import the package.
   final oldestPerson = personList.maxElement((element) => element.age);
   final youngestPerson = personList.minElement((element) => element.age);
   final totalAges = personList.sum((element) => element.age);
+  final isListNullOrEmpty = personList.isNullOrEmpty;
 ```
 
 ### String Extensions
