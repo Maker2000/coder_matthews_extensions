@@ -57,8 +57,7 @@ extension NullableListExtn<T> on Iterable<T>? {
   num average(num Function(T) sumFunction) {
     if (isNull) return 0;
     if (this!.isEmpty) {
-      throw UnsupportedError(
-          'List needs to have elements to perform average calculation');
+      throw UnsupportedError('List needs to have elements to perform average calculation');
     }
     return sum(sumFunction) / this!.length;
   }
@@ -82,10 +81,8 @@ extension NullableListExtn<T> on Iterable<T>? {
   num maxValue(num Function(T value) number) {
     if (isNull) return 0;
     if (this!.isEmpty) return 0;
-    return this!.fold(
-        number(this!.first),
-        (previousValue, element) =>
-            previousValue > number(element) ? previousValue : number(element));
+    return this!.fold(number(this!.first),
+        (previousValue, element) => previousValue > number(element) ? previousValue : number(element));
   }
 
   /// Returns the minumum value of a collection of [T] elements.
@@ -107,10 +104,8 @@ extension NullableListExtn<T> on Iterable<T>? {
   num minValue(num Function(T value) number) {
     if (isNull) return 0;
     if (this!.isEmpty) return 0;
-    return this!.fold(
-        number(this!.first),
-        (previousValue, element) =>
-            previousValue < number(element) ? previousValue : number(element));
+    return this!.fold(number(this!.first),
+        (previousValue, element) => previousValue < number(element) ? previousValue : number(element));
   }
 
   /// Groups a collection and returns a list of [Map<K, List<T>>] elements.
@@ -146,10 +141,8 @@ extension NullableListExtn<T> on Iterable<T>? {
   /// ```
   Map<K, List<T>> groupBy<K>(K Function(T e) keyFunction) {
     if (isNull) return <K, List<T>>{};
-    return this!.fold(
-        <K, List<T>>{},
-        (Map<K, List<T>> map, T element) =>
-            map..putIfAbsent(keyFunction(element), () => <T>[]).add(element));
+    return this!.fold(<K, List<T>>{},
+        (Map<K, List<T>> map, T element) => map..putIfAbsent(keyFunction(element), () => <T>[]).add(element));
   }
 
   /// Searches a list using the given [predicate] and returns the element.
@@ -215,10 +208,7 @@ extension ListExtn<T> on Iterable<T> {
     if (isEmpty) {
       throw UnsupportedError('Cannot use this function on empty list');
     }
-    return fold(
-        first,
-        (previousValue, element) =>
-            number(previousValue) > number(element) ? previousValue : element);
+    return fold(first, (previousValue, element) => number(previousValue) > number(element) ? previousValue : element);
   }
 
   /// Returns the minumum [Element] of a collection of [T] elements.
@@ -241,10 +231,7 @@ extension ListExtn<T> on Iterable<T> {
     if (isEmpty) {
       throw UnsupportedError('Cannot use this function on empty list');
     }
-    return fold(
-        first,
-        (previousValue, element) =>
-            number(previousValue) < number(element) ? previousValue : element);
+    return fold(first, (previousValue, element) => number(previousValue) < number(element) ? previousValue : element);
   }
 }
 
@@ -259,5 +246,14 @@ extension NullableListExtn2<T> on Iterable<T?>? {
       if (element != null) returnList.add(element);
     }
     return returnList;
+  }
+}
+
+extension StringListExn on Iterable<String> {
+  bool isInIgnoreCase(String val) {
+    for (var e in this) {
+      if (e.toLowerCase() == val.toLowerCase()) return true;
+    }
+    return false;
   }
 }
