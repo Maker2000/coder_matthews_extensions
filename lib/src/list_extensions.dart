@@ -1,17 +1,6 @@
 import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
 
 extension NullableListExtn<T> on Iterable<T>? {
-  /// Checks if given list contains an element of the given type [T]
-
-  // TODO: revisit [containsElement] function
-  // bool containsElement(T Function() f) {
-  //   if (isNull) return false;
-  //   for (T e in this!) {
-  //     if (e == f()) return true;
-  //   }
-  //   return false;
-  // }
-
   /// Calculates the sum of a collection of [T] elements.
   ///
   /// [sumFunction] requires a [num] to be returned

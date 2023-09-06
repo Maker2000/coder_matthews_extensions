@@ -12,3 +12,4 @@ export 'src/enum_extensions.dart';
 export 'src/validation_contract.dart';
 export 'src/exceptions/exceptions.dart';
 export 'src/object_extensions.dart';
+export 'src/material_extensions/material_extensions.dart';

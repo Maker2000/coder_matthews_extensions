@@ -1,27 +1,32 @@
-## 1.0.0
+## 1.2.0
 
-- Initial version.
+- added a material helper function to get the [RenderBox] of a widget global key
 
-## 1.0.1
+## 1.1.0
 
-- Added [firstOrNull] function to list extensions.
-- Added a [removeNulls] function on map types.
-
-## 1.0.2
-
-- Added [splitCamelCase] funtion to string extensions.
-- Added enum extensions.
-
-## 1.0.3
-
-- **BREAKING CHANGE**: renamed [firstOrNull] to [firstWhereOrNull] for list extensions.
+- added a new class [ValidationContract] for an exception workflow for validating conditions, null objects and empty/null strings.
+- added an extension on object for checking if any object is null.
+- **BREAKING CHANGE**: removed [compundAnd] and [compoundOr] from list extensions as dart already has a function like it.
 
 ## 1.0.4
 
 - added [toJsonEncodedString] to map extensions and [toDecodedJson] to string entensions for converting to and from json.
 - added [addBetween] to list extensions.
 
-## 1.1.0
-- added a new class [ValidationContract] for an exception workflow for validating conditions, null objects and empty/null strings.
-- added an extension on object for checking if any object is null.
-- **BREAKING CHANGE**: removed [compundAnd] and [compoundOr] from list extensions as dart already has a function like it.
+## 1.0.3
+
+- **BREAKING CHANGE**: renamed [firstOrNull] to [firstWhereOrNull] for list extensions.
+
+## 1.0.2
+
+- Added [splitCamelCase] funtion to string extensions.
+- Added enum extensions.
+
+## 1.0.1
+
+- Added [firstOrNull] function to list extensions.
+- Added a [removeNulls] function on map types.
+
+## 1.0.0
+
+- Initial version.
