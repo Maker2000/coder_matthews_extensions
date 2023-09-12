@@ -174,6 +174,17 @@ extension NullableListExtn<T> on Iterable<T>? {
     if (isNull) return false;
     return this!.isEmpty;
   }
+
+  Future<Iterable<K>> expandAsync<K>(Future<Iterable<K>> Function(T element) op) async {
+    if (this == null) return [];
+    var res = await this!.mapAsync(op);
+    return res.expand((element) => element);
+  }
+
+  Future<Iterable<K>> mapAsync<K>(Future<K> Function(T element) op) async {
+    if (this == null) return [];
+    return await Future.wait(this!.map(op));
+  }
 }
 
 extension ListExtn<T> on Iterable<T> {

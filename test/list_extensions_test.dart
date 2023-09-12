@@ -13,8 +13,7 @@ void main() {
       CoderPerson(name: 'George', age: 17, gender: Gender.male),
       CoderPerson(name: 'Bruce', age: 47, gender: Gender.male),
     ];
-    allGirlsList =
-        personList.where((element) => element.gender == Gender.female).toList();
+    allGirlsList = personList.where((element) => element.gender == Gender.female).toList();
     valueList = <double>[1.3, 1, 2.7];
   });
 

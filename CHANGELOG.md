@@ -1,3 +1,7 @@
+## 1.2.1
+
+- added a few async helpers for mapping list of futures [mapAsync] and for expanding futures [expandAsync]
+
 ## 1.2.0
 
 - added a material helper function to get the [RenderBox] of a widget global key

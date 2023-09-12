@@ -25,9 +25,7 @@ extension StringExtn on String? {
   /// ```
   String get sentenceCase {
     if (isNull) return '';
-    return this!.isNotEmpty
-        ? '${this![0].toUpperCase()}${this!.substring(1).toLowerCase()}'
-        : '';
+    return this!.isNotEmpty ? '${this![0].toUpperCase()}${this!.substring(1).toLowerCase()}' : '';
   }
 
   /// Returns the title case of this string value.
@@ -39,11 +37,7 @@ extension StringExtn on String? {
   /// ```
   String get titleCase {
     if (isNull) return "";
-    return this!
-        .replaceAll(RegExp(' +'), ' ')
-        .split(" ")
-        .map((str) => str.sentenceCase)
-        .join(" ");
+    return this!.replaceAll(RegExp(' +'), ' ').split(" ").map((str) => str.sentenceCase).join(" ");
   }
 
   /// Strips string of all charactors except numbers
@@ -85,9 +79,7 @@ extension StringExtn on String? {
   /// Evaluates if this string is a valid email address.
   bool get isEmail {
     if (isNull) return false;
-    return RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(this!);
+    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(this!);
   }
 
   /// Separates the camelcase word with a [separator] string
@@ -124,7 +116,7 @@ extension StringExtn on String? {
   }
 
   /// Returns a json object that the encoded string is
-  Map<String, dynamic> get toDecodedJson {
+  dynamic get toDecodedJson {
     if (isNullOrEmpty) return {};
     return jsonDecode(this!);
   }
