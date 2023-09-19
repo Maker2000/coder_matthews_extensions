@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:coder_matthews_extensions/src/object_extensions.dart';
+import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
 
 extension StringExtn on String? {
   static final _splitRegEx = RegExp(r"(?=(?!^)[A-Z])");
@@ -120,4 +120,10 @@ extension StringExtn on String? {
     if (isNullOrEmpty) return {};
     return jsonDecode(this!);
   }
+
+  /// Checks if [this] string is contained within a [Iterable] of strings while ignoring the case
+  bool inIgnoreCase(Iterable<String> data) => data.containsInoreCase(this);
+
+  /// Checks if [this] string is equal to another string while ignoring the case
+  bool equalsIgnoreCase(String other) => this?.toLowerCase() == other;
 }

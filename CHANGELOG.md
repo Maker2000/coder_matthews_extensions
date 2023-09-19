@@ -1,3 +1,8 @@
+## 1.2.2
+
+- **BREAKING CHANGE**: renamed [inIgnoreCase] to [containsIgnoreCase]
+- added an [inIgnoreCase] and [equalsIgnoreCase] to string extensions
+
 ## 1.2.1
 
 - added a few async helpers for mapping list of futures [mapAsync] and for expanding futures [expandAsync]
