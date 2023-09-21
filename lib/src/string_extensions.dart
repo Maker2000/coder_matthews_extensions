@@ -122,8 +122,8 @@ extension StringExtn on String? {
   }
 
   /// Checks if [this] string is contained within a [Iterable] of strings while ignoring the case
-  bool inIgnoreCase(Iterable<String> data) => data.containsInoreCase(this);
+  bool inIgnoreCase(Iterable<String> data) => data.containsIgnoreCase(this);
 
   /// Checks if [this] string is equal to another string while ignoring the case
-  bool equalsIgnoreCase(String other) => this?.toLowerCase() == other;
+  bool equalsIgnoreCase(String other) => this?.toLowerCase() == other.toLowerCase();
 }

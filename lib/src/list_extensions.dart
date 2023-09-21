@@ -251,7 +251,7 @@ extension NullableListExtn2<T> on Iterable<T?>? {
 
 extension StringListExn on Iterable<String> {
   /// Checks if this Iterable of string contains a string [element] while ignoring the case
-  bool containsInoreCase(String? element) {
+  bool containsIgnoreCase(String? element) {
     for (var e in this) {
       if (e.toLowerCase() == element?.toLowerCase()) return true;
     }

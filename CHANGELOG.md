@@ -1,3 +1,7 @@
+## 1.2.3
+
+- bug fix within [inIgnoreCase]
+
 ## 1.2.2
 
 - **BREAKING CHANGE**: renamed [inIgnoreCase] to [containsIgnoreCase]
