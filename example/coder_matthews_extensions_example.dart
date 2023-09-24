@@ -1,4 +1,5 @@
 import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   //list examples
@@ -13,25 +14,24 @@ void main() {
   ];
 
   final oldestPerson = personList.maxElement((element) => element.age);
-  print(oldestPerson.age);
+  debugPrint(oldestPerson.age.toString());
 
   final youngestPerson = personList.minElement((element) => element.age);
-  print(youngestPerson.age);
+  debugPrint(youngestPerson.age.toString());
 
   final group = personList.groupBy((e) => e.gender);
-  print(group);
+  debugPrint(group.toString());
 
   //string examples
 
-  final testerString = 'the Sky IS BluE.';
+  const testerString = 'the Sky IS BluE.';
   var number = '+1 (342) 342-2314';
-  print(number.onlyNumbers);
+  debugPrint(number.onlyNumbers);
 
   number = '13423422314';
-  print(number.toPhoneNumberString);
+  debugPrint(number.toPhoneNumberString);
 
-  print(
-      'Email: ${personList.first.email}, IsEmail: ${personList.first.email.isEmail}');
-  print(testerString.sentenceCase);
-  print(testerString.titleCase);
+  debugPrint('Email: ${personList.first.email}, IsEmail: ${personList.first.email.isEmail}');
+  debugPrint(testerString.sentenceCase);
+  debugPrint(testerString.titleCase);
 }

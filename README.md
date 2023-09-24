@@ -15,7 +15,7 @@ A variety of extensions I use in my projects.
 
 ## Features
 
-    Package contains extensions for lists and strings.
+    Package contains extensions for lists, strings, maps and async functions. Along with useful functions
 
 ## Getting started
 
@@ -49,6 +49,29 @@ No setup required, just import the package.
 
 ```
 
+### Map Extensions
+
+Removes null values
+
+```dart
+    var testMap = <String, dynamic>{
+      'name': 'Tom',
+      'age': null,
+      'location': 'USA'
+    };
+    var newMap = testMap.removeNulls;
+```
+
+1
+
+### Checking if your device is a tablet
+
+```dart
+var isTablet = await CoderMatthewsExtensions.isTablet();
+```
+
 Check example folder for more.
 
 ## Additional information
+
+N/A
