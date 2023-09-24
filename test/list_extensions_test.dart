@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:test/test.dart';
 import 'coder_matthews_extensions_test.dart';
 import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
@@ -68,5 +70,21 @@ void main() {
     var newNumbers = numbers.addBetween(0);
     var control = [1, 0, 2, 0, 3];
     expect(newNumbers, control);
+  });
+
+  test('shouldMapAsync', () async {
+    Future<int> returnAsyncNumber(int number) async {
+      await Future.delayed(Duration(seconds: 5));
+      return number;
+    }
+
+    List<Future<int>> asyncNumbers = [
+      returnAsyncNumber(1),
+      returnAsyncNumber(2),
+      returnAsyncNumber(3),
+    ];
+    var syncNumbers = await asyncNumbers.mapAsync((element) => element);
+    var control = [1, 2, 3];
+    expect(syncNumbers, control);
   });
 }

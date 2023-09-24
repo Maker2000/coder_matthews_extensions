@@ -1,3 +1,8 @@
+## 1.3.0
+
+- **Added platform implementations**
+  - There is a new class called [CoderMatthewsExtensions] which has a new function called [isTablet] which returns a bool whether the current device is a tablet or a regulat phone.
+
 ## 1.2.3
 
 - bug fix within [inIgnoreCase]
