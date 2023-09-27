@@ -2,6 +2,7 @@ package org.codemaker.coder_matthews_extensions
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import androidx.window.layout.WindowMetricsCalculator
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -32,14 +33,16 @@ class CoderMatthewsExtensionsPlugin: FlutterPlugin, MethodCallHandler, ActivityA
     when(call.method) {
       "getPlatformVersion" -> result.success("Android ${android.os.Build.VERSION.RELEASE}")
       "isTablet" ->{
-        val metrics = WindowMetricsCalculator.getOrCreate()
-          .computeCurrentWindowMetrics(activity)
-        val widthDp = metrics.bounds.width() /
-               context.resources.displayMetrics.density
-        val heightDp = metrics.bounds.height() /
-                context.resources.displayMetrics.density
-        var larger = if(widthDp > heightDp) widthDp else heightDp
-        result.success(larger > 900f)
+        result.success( (context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE)
+        //result.success( (context.resources.configuration.screenLayout) > Configuration.SCREENLAYOUT_SIZE_LARGE)
+//        val metrics = WindowMetricsCalculator.getOrCreate()
+//          .computeCurrentWindowMetrics(activity)
+//        val widthDp = metrics.bounds.width() /
+//               context.resources.displayMetrics.density
+//        val heightDp = metrics.bounds.height() /
+//                context.resources.displayMetrics.density
+//        var larger = if(widthDp > heightDp) widthDp else heightDp
+//        result.success(larger > 710f)
       }
       else -> result.notImplemented()
     }
