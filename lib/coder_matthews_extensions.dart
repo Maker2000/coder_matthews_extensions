@@ -23,3 +23,8 @@ class CoderMatthewsExtensions {
   /// Returns whether the current device is a tablet or not
   static Future<bool> isTablet() => CoderMatthewsExtensionsPlatform.instance.isTablet();
 }
+
+class TabletExtensions {
+  /// Returns whether the current device is a tablet or not
+  static Future<bool> isTablet() => CoderMatthewsExtensionsPlatform.instance.isTablet();
+}

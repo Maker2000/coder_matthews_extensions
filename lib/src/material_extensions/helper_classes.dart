@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class PositionData {
-  final RelativeRect position;
-  final RenderBox widgetBox;
+class WidgetPositionData {
+  final RelativeRect relativeRect;
+  final RenderBox renderBox;
 
-  PositionData(this.position, this.widgetBox);
+  WidgetPositionData(this.relativeRect, this.renderBox);
 }

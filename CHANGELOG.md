@@ -1,3 +1,19 @@
+## 1.4.0
+
+- added a new functions to list extensions
+  - [minDate]
+  - [maxDate]
+  - [mapWithIndex]
+- added a [maxParallelisms] property to [mapAsync] and [expandAsync]. (see in code docs for more)
+- other bug fixes with correcting documentation
+- added example widget pages to demonstrate using [getKeyPosition]
+- added extension functions on [Brightness]. Get functions [isLight] and [isDark]
+- **BREAKING CHANGES**:
+  - class name changed from [PositionDate] to [WidgetPositionData]
+  - properties name change in [PositionData] (now [WidgetPositionData])
+    - [position] -> [relativeRect]
+    - [widgetBox] -> [renderBox]
+
 ## 1.3.2
 
 - bug fix with android not properly recognizing tablet
@@ -32,7 +48,7 @@
 
 - added a new class [ValidationContract] for an exception workflow for validating conditions, null objects and empty/null strings.
 - added an extension on object for checking if any object is null.
-- **BREAKING CHANGE**: removed [compundAnd] and [compoundOr] from list extensions as dart already has a function like it.
+- **BREAKING CHANGE**: removed [compoundAnd] and [compoundOr] from list extensions as dart already has a function like it.
 
 ## 1.0.4
 

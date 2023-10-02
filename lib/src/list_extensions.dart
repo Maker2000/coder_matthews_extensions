@@ -29,7 +29,7 @@ extension NullableListExtn<T> on Iterable<T>? {
   /// Calculates the average of a collection of [T] elements.
   ///
   /// [sumFunction] requires a [num] to be returned
-  /// to use for the calculation. Using an empty list will throw an [UnsupportedError].
+  /// to use for the calculation. Using an empty list will return 0.
   ///
   /// Object Example:
   /// ``` dart
@@ -45,9 +45,7 @@ extension NullableListExtn<T> on Iterable<T>? {
   /// ```
   num average(num Function(T) sumFunction) {
     if (isNull) return 0;
-    if (this!.isEmpty) {
-      throw UnsupportedError('List needs to have elements to perform average calculation');
-    }
+    if (this!.isEmpty) return 0;
     return sum(sumFunction) / this!.length;
   }
 
@@ -175,63 +173,162 @@ extension NullableListExtn<T> on Iterable<T>? {
     return this!.isEmpty;
   }
 
-  Future<Iterable<K>> expandAsync<K>(Future<Iterable<K>> Function(T element) op) async {
+  /// An expand function that applies an [expand] operation to futures.
+  /// Specify a [maxParallelisms] ie: the amount of futures to be run at once till the list is completed. Defaults to 1
+  Future<Iterable<K>> expandAsync<K>(Future<Iterable<K>> Function(T element) op, [int maxParallelisms = 1]) async {
     if (this == null) return [];
-    var res = await this!.mapAsync(op);
+    var res = await this!.mapAsync(op, maxParallelisms);
     return res.expand((element) => element);
   }
 
-  Future<Iterable<K>> mapAsync<K>(Future<K> Function(T element) op) async {
-    if (this == null) return [];
-    return await Future.wait(this!.map(op));
+  /// A map function that applies a [map] operation to futures.
+  /// Specify a [maxParallelisms] ie: the amount of futures to be run at once till the list is completed. Defaults to 1
+  Future<Iterable<K>> mapAsync<K>(Future<K> Function(T element) op, [int maxParallelisms = 1]) async {
+    if (this == null) return Future.value([]);
+    var res = <K>[];
+    var counter = 0;
+    do {
+      var ops = this!.skip(counter * maxParallelisms).take(maxParallelisms);
+      res.addAll(await Future.wait(ops.map(op)));
+      counter++;
+    } while (res.length < this!.length);
+    return res;
   }
-}
 
-extension ListExtn<T> on Iterable<T> {
+  /// A modified map function that contains the current index of the iterated.
+  Iterable<K> mapWithIndex<K>(K Function(T element, int index) op) {
+    if (this == null) return [];
+    return this!.indexed.map((e) => op(e.$2, e.$1));
+  }
+
+  /// Returns a [T] element with the maximum [DateTime] of a collection of [T] elements.
+  ///
+  /// [op] requires a [DateTime] to be returned. Returns [Null] if list is empty
+  ///
+  /// Object Example:
+  /// ``` dart
+  /// final dateList = <Map<String, DateTime>>[
+  ///   {"date": DateTime.now()},
+  ///   {"date": DateTime.now().add(Duration(days: 5))},
+  ///   {"date": DateTime.now().subtract(Duration(days: 5))},
+  /// ];
+  /// final max = dateList.maxDate((element) => element["date"]!);
+  /// print(max); // {"date": 5 days after the current date}
+  /// ```
+  /// List of [DateTime]   Example:
+  /// ``` dart
+  /// final dateList = <DateTime>[
+  ///   DateTime.now(),
+  ///   DateTime.now().add(Duration(days: 5),
+  ///   DateTime.now().subtract(Duration(days: 5)
+  /// ];
+  /// final max = dateList.maxDate((element) => element);
+  /// print(max); // Prints 5 days after the current date
+  /// ```
+  T? maxDate(DateTime Function(T element) op) {
+    if (this == null) return null;
+    if (this!.isEmpty) return null;
+    return this!.fold(
+      this!.firstOrNull,
+      (previousValue, element) => previousValue == null
+          ? element
+          : op(previousValue).isAfter(op(element))
+              ? previousValue
+              : element,
+    );
+  }
+
+  /// Returns a [T] element with the minimum [DateTime] of a collection of [T] elements.
+  ///
+  /// [op] requires a [DateTime] to be returned. Returns [Null] if list is empty
+  ///
+  /// Object Example:
+  /// ``` dart
+  /// final dateList = <Map<String, DateTime>>[
+  ///   {"date": DateTime.now()},
+  ///   {"date": DateTime.now().add(Duration(days: 5))},
+  ///   {"date": DateTime.now().subtract(Duration(days: 5))},
+  /// ];
+  /// final min = dateList.minDate((element) => element["date"]!);
+  /// print(min); // {"date": 5 days before the current date}
+  /// ```
+  /// List of [DateTime]   Example:
+  /// ``` dart
+  /// final dateList = <DateTime>[
+  ///   DateTime.now(),
+  ///   DateTime.now().add(Duration(days: 5),
+  ///   DateTime.now().subtract(Duration(days: 5),
+  /// ];
+  /// final min = dateList.minDate((element) => element);
+  /// print(min); // Prints 5 days before the current date
+  /// ```
+  T? minDate(DateTime Function(T element) op) {
+    if (this == null) return null;
+    if (this!.isEmpty) return null;
+    return this!.fold(
+      this!.firstOrNull,
+      (previousValue, element) => previousValue == null
+          ? element
+          : op(previousValue).isBefore(op(element))
+              ? previousValue
+              : element,
+    );
+  }
+
   /// Returns the maximum [Element] of a collection of [T] elements.
   ///
-  /// [number] requires a [num] to be returned. Throws [UnsupportedError] if list is empty
+  /// [number] requires a [num] to be returned. Returns a [Null] if list is empty
   ///
   /// Object Example:
   /// ``` dart
   /// final valueList = <Map<String, double>>[{"value": 1.3},{"value": 1},{"value": 2.7},];
   /// final max = valueList.maxElement((element) => element["value"]!);
-  /// print(average); // {"value": 2.7}
+  /// print(max); // {"value": 2.7}
   /// ```
   /// List of [double]   Example:
   /// ``` dart
   /// final valueList = <double>[1.3, 1, 2.7];
-  /// final max = valueList.max((element) => element);
-  /// print(average); // 2.7
+  /// final max = valueList.maxElement((element) => element);
+  /// print(max); // 2.7
   /// ```
-  T maxElement(num Function(T element) number) {
-    if (isEmpty) {
-      throw UnsupportedError('Cannot use this function on empty list');
-    }
-    return fold(first, (previousValue, element) => number(previousValue) > number(element) ? previousValue : element);
+  T? maxElement(num Function(T element) number) {
+    if (this == null) return null;
+    if (this!.isEmpty) return null;
+    return this!.fold(
+        this!.firstOrNull,
+        (previousValue, element) => previousValue == null
+            ? element
+            : number(previousValue) > number(element)
+                ? previousValue
+                : element);
   }
 
   /// Returns the minumum [Element] of a collection of [T] elements.
   ///
-  /// [number] requires a [num] to be returned. Throws [UnsupportedError] if list is empty
+  /// [number] requires a [num] to be returned. Returns [Null] if list is empty
   ///
   /// Object Example:
   /// ``` dart
   /// final valueList = <Map<String, double>>[{"value": 1.3},{"value": 1},{"value": 2.7},];
-  /// final max = valueList.maxElement((element) => element["value"]!);
-  /// print(average); // {"value": 1}
+  /// final min = valueList.minElement((element) => element["value"]!);
+  /// print(min); // {"value": 1}
   /// ```
   /// List of [double]   Example:
   /// ``` dart
   /// final valueList = <double>[1.3, 1, 2.7];
-  /// final max = valueList.max((element) => element);
-  /// print(average); // 1
+  /// final min = valueList.minElement((element) => element);
+  /// print(min); // 1
   /// ```
-  T minElement(num Function(T element) number) {
-    if (isEmpty) {
-      throw UnsupportedError('Cannot use this function on empty list');
-    }
-    return fold(first, (previousValue, element) => number(previousValue) < number(element) ? previousValue : element);
+  T? minElement(num Function(T element) number) {
+    if (this == null) return null;
+    if (this!.isEmpty) return null;
+    return this!.fold(
+        this!.firstOrNull,
+        (previousValue, element) => previousValue == null
+            ? element
+            : number(previousValue) < number(element)
+                ? previousValue
+                : element);
   }
 }
 
@@ -256,5 +353,12 @@ extension StringListExn on Iterable<String> {
       if (e.toLowerCase() == element?.toLowerCase()) return true;
     }
     return false;
+  }
+}
+
+extension FutureListExtn<TSouce> on Future<Iterable<TSouce>> {
+  /// converts a [Future]<[Iterable]> to a [Future]<[List]>
+  Future<List<TSouce>> toListAsync() {
+    return then((value) => value.toList());
   }
 }

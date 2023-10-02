@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:coder_matthews_extensions/src/future_helper.dart';
 import 'package:test/test.dart';
 import 'coder_matthews_extensions_test.dart';
 import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
@@ -23,14 +24,14 @@ void main() {
     final max = valueList.maxValue((element) => element);
     expect(max, 2.7);
     final oldestPerson = personList.maxElement((element) => element.age);
-    expect(oldestPerson.age, 56);
+    expect(oldestPerson?.age, 56);
   });
 
   test('shouldGetMinValue', () {
     final min = valueList.minValue((element) => element);
     expect(min, 1);
     final youngestPerson = personList.minElement((element) => element.age);
-    expect(youngestPerson.age, 16);
+    expect(youngestPerson?.age, 16);
   });
 
   test('shouldGroupBy', () {
@@ -78,13 +79,61 @@ void main() {
       return number;
     }
 
-    List<Future<int>> asyncNumbers = [
-      returnAsyncNumber(1),
-      returnAsyncNumber(2),
-      returnAsyncNumber(3),
-    ];
-    var syncNumbers = await asyncNumbers.mapAsync((element) => element);
+    var counter = Stopwatch();
+
+    List<int> asyncNumbers = [1, 2, 3];
+    counter.start();
+    var syncNumbers = await asyncNumbers.mapAsync((element) => returnAsyncNumber(element), 5);
     var control = [1, 2, 3];
+    counter.stop();
+    // check that the parallelisms worked
+    // var time = counter.elapsed;
     expect(syncNumbers, control);
+  });
+
+  test('shouldExpandAsync', () async {
+    Future<List<int>> returnAsyncList(int number) async {
+      await Future.delayed(Duration(seconds: 5));
+      return [number, number];
+    }
+
+    var counter = Stopwatch();
+    List<int> asyncNumbers = [1, 2, 3];
+
+    var syncNumbers = await asyncNumbers.expandAsync((element) => returnAsyncList(element), 5).toListAsync();
+    var control = [1, 1, 2, 2, 3, 3];
+
+    counter.start();
+    counter.stop();
+    // check that the parallelisms worked
+    // var time = counter.elapsed;
+
+    expect(syncNumbers, control);
+  });
+
+  test('shouldRunFunctionsInParallel', () async {
+    Future<List<int>> returnAsyncList(int number) async {
+      await Future.delayed(Duration(seconds: 5));
+      return [number, number];
+    }
+
+    Future<int> returnAsyncNumber(int number) async {
+      await Future.delayed(Duration(seconds: 5));
+      return number;
+    }
+
+    var testNumber = 7;
+    var (list, numberRes) =
+        await FutureHelper.parallel2(() => returnAsyncList(testNumber), () => returnAsyncNumber(testNumber));
+    var controlList = [testNumber, testNumber];
+
+    expect(testNumber, numberRes);
+    expect(list, controlList);
+
+    var (list1, numberRes1, numberRes2) = await FutureHelper.parallel3(
+        () => returnAsyncList(testNumber), () => returnAsyncNumber(testNumber), () => returnAsyncNumber(testNumber));
+    expect(testNumber, numberRes1);
+    expect(testNumber, numberRes2);
+    expect(list1, controlList);
   });
 }

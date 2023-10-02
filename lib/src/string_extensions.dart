@@ -126,4 +126,8 @@ extension StringExtn on String? {
 
   /// Checks if [this] string is equal to another string while ignoring the case
   bool equalsIgnoreCase(String other) => this?.toLowerCase() == other.toLowerCase();
+
+  /// Useful when using go_router. Adds a '/' in front of the name of the string.
+  /// Will return an empty string if the string is null.
+  String get toRoute => this == null ? "" : "/$this";
 }

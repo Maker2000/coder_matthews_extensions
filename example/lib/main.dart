@@ -1,3 +1,4 @@
+import 'package:coder_matthews_extensions_example/widget_position_example.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -58,6 +59,28 @@ class _MyAppState extends State<MyApp> {
             children: [
               Text('Running on: $_platformVersion\n'),
               Text(isTablet ? 'This device is a tablet' : 'This device is phone'),
+              ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Other Examples'),
+                            content: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ElevatedButton(
+                                      onPressed: () => Navigator.of(context)
+                                          .push(MaterialPageRoute(builder: (context) => const WidgetPositionExample())),
+                                      child: const Text('Widget Position Example'))
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                  },
+                  child: const Text('Other Examples'))
             ],
           ),
         ),
