@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:coder_matthews_extensions/src/future_helper.dart';
 import 'package:test/test.dart';
 import 'coder_matthews_extensions_test.dart';
 import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
@@ -110,30 +109,42 @@ void main() {
 
     expect(syncNumbers, control);
   });
+  test('shouldIntersectLists', () {
+    var intesectPersonList = [
+      CoderPerson(name: "Jane", age: 16, gender: Gender.female),
+      CoderPerson(name: 'Bob', age: 20, gender: Gender.male),
+      CoderPerson(name: 'King', age: 56, gender: Gender.male),
+    ];
+    var mainList = [
+      CoderPerson(name: "Jane", age: 16, gender: Gender.female),
+      CoderPerson(name: "Katy", age: 22, gender: Gender.female),
+      CoderPerson(name: 'George', age: 17, gender: Gender.male),
+      CoderPerson(name: 'Bruce', age: 47, gender: Gender.male)
+    ];
+    var res = mainList.intersectBy(intesectPersonList, (e) => e.age);
+    expect(
+        res.map((e) => e.toJson()), [CoderPerson(name: "Jane", age: 16, gender: Gender.female)].map((e) => e.toJson()));
+  });
+  test('shouldIntersectByLists', () {
+    var intesectPersonList = [
+      CoderPerson(name: "Jane", age: 16, gender: Gender.female),
+      CoderPerson(name: 'Bob', age: 20, gender: Gender.male),
+      CoderPerson(name: 'King', age: 56, gender: Gender.male),
+    ];
+    var mainList = [
+      CoderPerson(name: "Jane", age: 16, gender: Gender.female),
+      CoderPerson(name: "Katy", age: 22, gender: Gender.female),
+      CoderPerson(name: 'George', age: 17, gender: Gender.male),
+      CoderPerson(name: 'Bruce', age: 47, gender: Gender.male)
+    ];
+    var res = mainList.intersectBy(intesectPersonList, (e) => e.toJson().toJsonEncodedString);
+    expect(
+        res.map((e) => e.toJson()), [CoderPerson(name: "Jane", age: 16, gender: Gender.female)].map((e) => e.toJson()));
+  });
 
-  test('shouldRunFunctionsInParallel', () async {
-    Future<List<int>> returnAsyncList(int number) async {
-      await Future.delayed(Duration(seconds: 5));
-      return [number, number];
-    }
-
-    Future<int> returnAsyncNumber(int number) async {
-      await Future.delayed(Duration(seconds: 5));
-      return number;
-    }
-
-    var testNumber = 7;
-    var (list, numberRes) =
-        await FutureHelper.parallel2(() => returnAsyncList(testNumber), () => returnAsyncNumber(testNumber));
-    var controlList = [testNumber, testNumber];
-
-    expect(testNumber, numberRes);
-    expect(list, controlList);
-
-    var (list1, numberRes1, numberRes2) = await FutureHelper.parallel3(
-        () => returnAsyncList(testNumber), () => returnAsyncNumber(testNumber), () => returnAsyncNumber(testNumber));
-    expect(testNumber, numberRes1);
-    expect(testNumber, numberRes2);
-    expect(list1, controlList);
+  test('shouldOrderByLists', () {
+    var sortedList = personList.orderBy((element) => element.name);
+    // ignore: unused_local_variable
+    var k = sortedList;
   });
 }

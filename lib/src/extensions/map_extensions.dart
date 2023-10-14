@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:coder_matthews_extensions/src/object_extensions.dart';
+import 'object_extensions.dart';
 
 extension MapExtn<T, K> on Map<T, K>? {
   /// Removes null values from this [Map]

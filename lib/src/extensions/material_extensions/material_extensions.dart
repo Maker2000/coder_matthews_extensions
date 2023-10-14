@@ -1,4 +1,4 @@
-import 'package:coder_matthews_extensions/src/material_extensions/helper_classes.dart';
+import 'helper_classes.dart';
 import 'package:flutter/material.dart';
 export 'helper_classes.dart';
 

@@ -1,4 +1,6 @@
-import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
+import 'package:flutter/material.dart';
+import '../helpers/enums.dart';
+import 'object_extensions.dart';
 
 extension NullableListExtn<T> on Iterable<T>? {
   /// Calculates the sum of a collection of [T] elements.
@@ -132,12 +134,23 @@ extension NullableListExtn<T> on Iterable<T>? {
         (Map<K, List<T>> map, T element) => map..putIfAbsent(keyFunction(element), () => <T>[]).add(element));
   }
 
-  /// Searches a list using the given [predicate] and returns the element.
+  /// Searches a list using the first element matching given [predicate] and returns the element.
   /// If not found, it returns null
   T? firstWhereOrNull(bool Function(T element) predicate) {
     if (isNull) return null;
     try {
       return this!.firstWhere(predicate);
+    } on StateError {
+      return null;
+    }
+  }
+
+  /// Searches a list using the last element matching given [predicate] and returns the element.
+  /// If not found, it returns null
+  T? lastWhereOrNull(bool Function(T element) predicate) {
+    if (isNull) return null;
+    try {
+      return this!.lastWhere(predicate);
     } on StateError {
       return null;
     }
@@ -329,6 +342,75 @@ extension NullableListExtn<T> on Iterable<T>? {
             : number(previousValue) < number(element)
                 ? previousValue
                 : element);
+  }
+
+  // Iterable<T> intersect(Iterable<T> other, Map<String, dynamic> Function(T element) converter) {
+  //   if (this == null) return List.empty();
+  //   var es = this!
+  //       .map((e) => converter(e).toJsonEncodedString)
+  //       .toSet()
+  //       .intersection(other.map((e) => converter(e).toJsonEncodedString).toSet())
+  //       .toList();
+  //   var res = <T>[];
+  //   var remap = T.isPrimitiveDataType ? other : other.map((e) => jsonEncode(e));
+  //   for (var e in this!) {
+  //     if (remap.contains(T.isPrimitiveDataType ? jsonEncode(e) : e)) res.add(e);
+  //   }
+  //   return res;
+  // }
+
+  /// Returns a iterable containing the elements that exists within both this [Iterable] and the [other]
+  /// [Iterable] using the returning property coming from the predicate
+  Iterable<T> intersectBy<K>(Iterable<T> other, K Function(T item) predicate) {
+    if (this == null) return List.empty();
+    var res = <T>[];
+    var otherConverted = other.map(predicate).toList();
+    for (var e in this!) {
+      if (otherConverted.contains(predicate(e))) res.add(e);
+    }
+    return res;
+  }
+
+  /// Returns a new list that is ordered by the property returned from the operation [op].
+  ///
+  /// Will throw and [UnsupportedError] exception if the data type returned by the [op] is not supported in the sort
+  Iterable<T> orderBy<K>(K? Function(T element) op, [OrderDirection dir = OrderDirection.asc]) {
+    if (this == null) return [];
+    var shadowThis = this!;
+    int Function(T a, T b) sorter = switch (K) {
+      (num) => (a, b) =>
+          _orderByHelper(op(a), op(b)).$2 ? _orderByHelper(op(a), op(b)).$1! : (op(a) as num).compareTo(op(b) as num),
+      (DateTime) => (a, b) => _orderByHelper(op(a), op(b)).$2
+          ? _orderByHelper(op(a), op(b)).$1!
+          : (op(a) as DateTime).compareTo(op(b) as DateTime),
+      (Duration) => (a, b) => _orderByHelper(op(a), op(b)).$2
+          ? _orderByHelper(op(a), op(b)).$1!
+          : (op(a) as Duration).compareTo(op(b) as Duration),
+      (TimeOfDay) => (a, b) {
+          if (_orderByHelper(op(a), op(b)).$2) {
+            return _orderByHelper(op(a), op(b)).$1!;
+          } else {
+            var aTime = (op(a) as TimeOfDay).hour + (op(a) as TimeOfDay).minute / 60;
+            var bTime = (op(b) as TimeOfDay).hour + (op(b) as TimeOfDay).minute / 60;
+            return aTime.compareTo(bTime);
+          }
+        },
+      (Enum) => (a, b) => _orderByHelper(op(a), op(b)).$2
+          ? _orderByHelper(op(a), op(b)).$1!
+          : (op(a) as Enum).name.compareTo((op(b) as Enum).name),
+      (String) => (a, b) => _orderByHelper(op(a), op(b)).$2
+          ? _orderByHelper(op(a), op(b)).$1!
+          : op(a).toString().compareTo(op(b).toString()),
+      _ => throw UnsupportedError('$K data type is not supported by this order by')
+    };
+    return List.from(shadowThis)..sort((a, b) => sorter(a, b) * (dir == OrderDirection.asc ? 1 : -1));
+  }
+
+  (int?, bool) _orderByHelper<O>(O a, O b) {
+    if (a == null && b == null) return (0, true);
+    if (a == null) return (1, true);
+    if (b == null) return (-1, true);
+    return (null, false);
   }
 }
 

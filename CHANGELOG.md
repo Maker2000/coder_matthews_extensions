@@ -1,3 +1,11 @@
+## 1.5.0
+
+- added a [FutureHelper] that allows you to run up to 6 future functions in parallel
+- added more extensions to [list_extensions]
+  - [intersectBy]
+  - [orderBy]
+- reorganized files
+
 ## 1.4.0
 
 - added a new functions to list extensions

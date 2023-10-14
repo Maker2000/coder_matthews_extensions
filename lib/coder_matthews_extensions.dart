@@ -5,16 +5,18 @@ library coder_matthews_extensions;
 
 import 'package:coder_matthews_extensions/coder_matthews_extensions_platform_interface.dart';
 
-export 'src/coder_matthews_extensions_base.dart';
-export 'src/string_extensions.dart';
-export 'src/date_extensions.dart';
-export 'src/list_extensions.dart';
-export 'src/map_extensions.dart';
-export 'src/enum_extensions.dart';
-export 'src/validation_contract.dart';
+export 'src/extensions/coder_matthews_extensions_base.dart';
+export 'src/extensions/string_extensions.dart';
+export 'src/extensions/date_extensions.dart';
+export 'src/extensions/list_extensions.dart';
+export 'src/extensions/map_extensions.dart';
+export 'src/extensions/enum_extensions.dart';
+export 'src/helpers/validation_contract.dart';
 export 'src/exceptions/exceptions.dart';
-export 'src/object_extensions.dart';
-export 'src/material_extensions/material_extensions.dart';
+export 'src/extensions/object_extensions.dart';
+export 'src/extensions/material_extensions/material_extensions.dart';
+export 'src/helpers/future_helper.dart';
+export 'src/helpers/enums.dart';
 
 class CoderMatthewsExtensions {
   /// Returns the playform version

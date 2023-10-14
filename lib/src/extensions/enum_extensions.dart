@@ -1,4 +1,4 @@
-import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
+import 'string_extensions.dart';
 
 extension EnumExtn on Enum {
   /// Returns enum value as title case with space

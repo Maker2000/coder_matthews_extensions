@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
+import 'object_extensions.dart';
+import 'list_extensions.dart';
 
 extension StringExtn on String? {
   static final _splitRegEx = RegExp(r"(?=(?!^)[A-Z])");

@@ -1,15 +1,15 @@
 class FutureHelper {
   /// Executes 2 functions in parallel using Future.wait, and returns their results as tuples
-  static Future<(F1, F2)> parallel2<F1, F2>(Future<F1> Function() t1, Future<F2> Function() t2) async {
-    var res = await Future.wait([t1.call(), t2.call()]);
-    return (res.whereType<F1>().first, res.whereType<F2>().first);
+  static Future<(F1, F2)> parallel2<F1, F2>(Future<F1> Function() f1, Future<F2> Function() f2) async {
+    var res = await Future.wait([f1.call(), f2.call()]);
+    return (res.whereType<F1>().first, res.skip(1).whereType<F2>().first);
   }
 
   /// Executes 3 functions in parallel using Future.wait, and returns their results as tuples
   static Future<(F1, F2, F3)> parallel3<F1, F2, F3>(
       Future<F1> Function() f1, Future<F2> Function() f2, Future<F3> Function() f3) async {
     var res = await Future.wait([f1.call(), f2.call(), f3.call()]);
-    return (res.whereType<F1>().first, res.whereType<F2>().first, res.whereType<F3>().first);
+    return (res.whereType<F1>().first, res.skip(1).whereType<F2>().first, res.skip(2).whereType<F3>().first);
   }
 
   /// Executes 4 functions in parallel using Future.wait, and returns their results as tuples
@@ -20,7 +20,12 @@ class FutureHelper {
     Future<F4> Function() f4,
   ) async {
     var res = await Future.wait([f1.call(), f2.call(), f3.call(), f4.call()]);
-    return (res.whereType<F1>().first, res.whereType<F2>().first, res.whereType<F3>().first, res.whereType<F4>().first);
+    return (
+      res.whereType<F1>().first,
+      res.skip(1).whereType<F2>().first,
+      res.skip(2).whereType<F3>().first,
+      res.skip(3).whereType<F4>().first
+    );
   }
 
   /// Executes 5 functions in parallel using Future.wait, and returns their results as tuples
@@ -34,10 +39,10 @@ class FutureHelper {
     var res = await Future.wait([f1.call(), f2.call(), f3.call(), f4.call(), f5.call()]);
     return (
       res.whereType<F1>().first,
-      res.whereType<F2>().first,
-      res.whereType<F3>().first,
-      res.whereType<F4>().first,
-      res.whereType<F5>().first
+      res.skip(1).whereType<F2>().first,
+      res.skip(2).whereType<F3>().first,
+      res.skip(3).whereType<F4>().first,
+      res.skip(4).whereType<F5>().first
     );
   }
 
@@ -59,11 +64,11 @@ class FutureHelper {
     ]);
     return (
       res.whereType<F1>().first,
-      res.whereType<F2>().first,
-      res.whereType<F3>().first,
-      res.whereType<F4>().first,
-      res.whereType<F5>().first,
-      res.whereType<F6>().first,
+      res.skip(1).whereType<F2>().first,
+      res.skip(2).whereType<F3>().first,
+      res.skip(3).whereType<F4>().first,
+      res.skip(4).whereType<F5>().first,
+      res.skip(5).whereType<F6>().first,
     );
   }
 }
