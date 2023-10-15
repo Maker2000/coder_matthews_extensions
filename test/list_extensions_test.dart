@@ -8,6 +8,8 @@ void main() {
   setUp(() {
     personList = [
       CoderPerson(name: "Jane", age: 16, gender: Gender.female),
+      CoderPerson(name: "Bobbet", age: 16, gender: Gender.female),
+      CoderPerson(name: "Xanders", age: 16, gender: Gender.male),
       CoderPerson(name: 'Bob', age: 20, gender: Gender.male),
       CoderPerson(name: 'King', age: 56, gender: Gender.male),
       CoderPerson(name: "Joane", age: 18, gender: Gender.female),
@@ -149,7 +151,14 @@ void main() {
       CoderPerson(name: "Jannet", age: 16, gender: null),
     ].orderBy((element) => element.gender);
     // ignore: unused_local_variable
-    var sortedList = personList.orderBy((element) => element.name);
+    var sortedList = personList.orderByMany(
+      (element) => [
+        MultiSorterArgs(field: element.age, orderDirection: OrderDirection.desc),
+        MultiSorterArgs(field: element.name, orderDirection: OrderDirection.desc),
+      ],
+    );
+    // ignore: unused_local_variable
+    var sortedList2 = personList.orderBy((element) => element.name);
     var intList = List.of([1, null, 2]);
     var sortedIntList = intList.order().toList();
     var t = sortedIntList.first;

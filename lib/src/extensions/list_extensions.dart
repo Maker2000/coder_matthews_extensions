@@ -1,5 +1,6 @@
-import 'package:coder_matthews_extensions/src/helpers/extension_helper.dart';
+import '../helpers/extension_helper.dart';
 import 'package:flutter/material.dart';
+import '../helpers/classes.dart';
 import '../helpers/enums.dart';
 import 'object_extensions.dart';
 
@@ -380,8 +381,39 @@ extension NullableListExtn<T> on Iterable<T>? {
     var shadowThis = this!;
     var res = List<T>.from(shadowThis)
       ..sort((a, b) =>
-          ExtensionHelper.sorter<K>(UnsupportedError('$K data type is not supported by this order by'))(op(a), op(b)) *
+          ExtensionHelper.sorter<K>(op(a), op(b), UnsupportedError('$K data type is not supported by this order by')) *
           (dir == OrderDirection.asc ? 1 : -1));
+    return res;
+  }
+
+  /// Returns a new list that is ordered by the list of properties returned from the operation [ops].
+  /// NOTE: the list will be sorted by the order of the operations entered.
+  ///
+  /// Will throw and [UnsupportedError] exception if the data type returned by the [op] is not supported in the sort
+  /// Example:
+  /// ```dart
+  /// var personList = [
+  ///   CoderPerson(name: "Jane", age: 16, gender: Gender.female),
+  ///   CoderPerson(name: "Bobbet", age: 16, gender: Gender.female),
+  ///   CoderPerson(name: "Xanders", age: 16, gender: Gender.male),
+  ///   CoderPerson(name: 'Bob', age: 20, gender: Gender.male),
+  ///   CoderPerson(name: 'King', age: 56, gender: Gender.male),
+  /// ];
+  /// var sortedList = personList.orderByMany(
+  ///     (element) => [
+  ///      MultiSorterArgs(field: element.age, orderDirection: OrderDirection.desc),
+  ///      MultiSorterArgs(field: element.name, orderDirection: OrderDirection.desc),
+  ///    ],
+  ///  );
+  /// ```
+  Iterable<T> orderByMany<K>(List<MultiSorterArgs> Function(T element) ops) {
+    if (this == null) return [];
+    var shadowThis = this!;
+    var res = List<T>.from(shadowThis)
+      ..sort((a, b) {
+        return ExtensionHelper.multipleSorter((index) => (ops(a)[index], ops(b)[index]),
+            (dataType) => UnsupportedError('$dataType data type is not supported by this order by'), ops(a).length - 1);
+      });
     return res;
   }
 }
@@ -407,9 +439,11 @@ extension NullableListExtn2<T> on Iterable<T?>? {
     var shadowThis = this!;
     var res = shadowThis.toList()
       ..sort((a, b) =>
-          ExtensionHelper.sorter<T>(UnsupportedError(
-                  '$T data type is not supported by this order function. Try using orderBy for more complex objects'))(
-              a, b) *
+          ExtensionHelper.sorter<T>(
+              a,
+              b,
+              UnsupportedError(
+                  '$T data type is not supported by this order function. Try using orderBy for more complex objects')) *
           (dir == OrderDirection.asc ? 1 : -1));
     return res;
   }
