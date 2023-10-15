@@ -143,8 +143,16 @@ void main() {
   });
 
   test('shouldOrderByLists', () {
-    var sortedList = personList.orderBy((element) => element.name);
     // ignore: unused_local_variable
-    var k = sortedList;
+    var nullableList = [
+      ...personList,
+      CoderPerson(name: "Jannet", age: 16, gender: null),
+    ].orderBy((element) => element.gender);
+    // ignore: unused_local_variable
+    var sortedList = personList.orderBy((element) => element.name);
+    var intList = List.of([1, null, 2]);
+    var sortedIntList = intList.order().toList();
+    var t = sortedIntList.first;
+    expect(null, t);
   });
 }

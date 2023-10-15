@@ -1,9 +1,26 @@
+## 1.5.1
+
+- bug fixed for [orderBy] extension function
+- added an [order] function for list of nullable premitive data types
+  - [Enum]
+  - [DateTime]
+  - [String]
+  - [num]
+  - [Duration]
+  - [TimeOfDay]
+
 ## 1.5.0
 
 - added a [FutureHelper] that allows you to run up to 6 future functions in parallel
 - added more extensions to [list_extensions]
   - [intersectBy]
-  - [orderBy]
+  - [orderBy] <- supports the following data types (see in code documentation for more information)
+    - [Enum]
+    - [DateTime]
+    - [String]
+    - [num]
+    - [Duration]
+    - [TimeOfDay]
 - reorganized files
 
 ## 1.4.0
