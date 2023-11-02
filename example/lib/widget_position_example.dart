@@ -20,6 +20,8 @@ class _WidgetPositionExampleState extends State<WidgetPositionExample> {
     } else {
       widgetPosition = 'Null position';
     }
+
+    setState(() {});
   }
 
   @override

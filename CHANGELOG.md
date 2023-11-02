@@ -1,3 +1,8 @@
+## 1.7.0
+
+- added shimmer loading widgets (check the example project to see it in action!)
+- added a minor bug fix for checking whether device is a tablet or not
+
 ## 1.6.0
 
 - added a new orderby type function [orderByMany] which allows you to order a list of complex object by multiple fields

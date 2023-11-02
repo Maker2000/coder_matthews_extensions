@@ -8,6 +8,7 @@ import 'package:coder_matthews_extensions/coder_matthews_extensions_platform_int
 export 'src/exceptions/exceptions.dart';
 export 'src/extensions/extensions.dart';
 export 'src/helpers/helpers.dart';
+export 'src/widgets/widgets.dart';
 
 class CoderMatthewsExtensions {
   /// Returns the playform version

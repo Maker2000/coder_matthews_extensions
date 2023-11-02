@@ -1,3 +1,4 @@
+import 'package:coder_matthews_extensions_example/shimmer_example.dart';
 import 'package:coder_matthews_extensions_example/widget_position_example.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -15,6 +16,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      initialRoute: "/",
+      routes: {
+        "/": (context) => const Home(),
+        "/widget_position_example": (context) => const WidgetPositionExample(),
+        "/shimmer_example": (context) => const ShimmerExample(),
+      },
+    );
+  }
+}
+
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   String _platformVersion = 'Unknown';
   bool isTablet = false;
   final _coderMatthewsExtensionsPlugin = CoderMatthewsExtensions();
@@ -46,43 +68,45 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  Map<String, String> get otherExamples => {
+        '/widget_position_example': 'Widget Position Example',
+        '/shimmer_example': 'Shimmer Loading Example',
+      };
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Running on: $_platformVersion\n'),
-              Text(isTablet ? 'This device is a tablet' : 'This device is phone'),
-              ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Other Examples'),
-                            content: SingleChildScrollView(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Plugin example app'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Running on: $_platformVersion\n'),
+            Text(isTablet ? 'This device is a tablet' : 'This device is phone'),
+            ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Other Examples'),
+                          content: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                for (var item in otherExamples.entries)
                                   ElevatedButton(
-                                      onPressed: () => Navigator.of(context)
-                                          .push(MaterialPageRoute(builder: (context) => const WidgetPositionExample())),
-                                      child: const Text('Widget Position Example'))
-                                ],
-                              ),
+                                      onPressed: () => Navigator.of(context).pushNamed(item.key),
+                                      child: Text(item.value))
+                              ],
                             ),
-                          );
-                        });
-                  },
-                  child: const Text('Other Examples'))
-            ],
-          ),
+                          ),
+                        );
+                      });
+                },
+                child: const Text('Other Examples'))
+          ],
         ),
       ),
     );
