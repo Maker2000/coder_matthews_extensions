@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
+import 'package:coder_matthews_extensions/src/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 
 LinearGradient shimmerGradient(Brightness brightness) => LinearGradient(

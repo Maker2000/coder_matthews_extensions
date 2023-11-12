@@ -1,6 +1,7 @@
-import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
-import 'package:coder_matthews_extensions/src/widgets/error_dialog.dart';
 import 'package:flutter/material.dart';
+
+import '../helpers/helpers.dart';
+import '../widgets/widgets.dart';
 
 abstract class IAppErrorHandler {
   void onError();

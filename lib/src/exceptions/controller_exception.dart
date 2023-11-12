@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
 import 'package:http/http.dart';
+
+import '../extensions/extensions.dart';
 
 abstract interface class ControllerException {
   Type get source;

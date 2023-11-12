@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:coder_matthews_extensions/src/utilities/type_definitions.dart';
+import 'type_definitions.dart';
 import 'package:http/http.dart';
 
 class MultiPartRequestWithProgress extends MultipartRequest {

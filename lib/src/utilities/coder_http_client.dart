@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:coder_matthews_extensions/src/utilities/type_definitions.dart';
+import 'type_definitions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
