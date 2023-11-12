@@ -9,6 +9,7 @@ export 'src/exceptions/exceptions.dart';
 export 'src/extensions/extensions.dart';
 export 'src/helpers/helpers.dart';
 export 'src/widgets/widgets.dart';
+export 'src/utilities/utilities.dart';
 
 class CoderMatthewsExtensions {
   /// Returns the playform version

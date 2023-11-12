@@ -1,3 +1,7 @@
+## 1.8.0
+
+- added a global error handler as well as a custom http client called [MakerHttpClient] that allows throwing exceptions on certain [Response] status codes from http.
+
 ## 1.7.0
 
 - added shimmer loading widgets (check the example project to see it in action!)

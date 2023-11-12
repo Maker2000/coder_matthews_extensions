@@ -6,7 +6,23 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
 
-void main() => runApp(const MyApp());
+final globalErrorHandler = GlobalErrorHandler.withDefaultShowErrorDialog(
+    controllerHandlers: {},
+    convertException: (error) {
+      if (error is Exception) return ErrorData(message: error.toString(), title: 'Error', exception: error);
+      if (error is ControllerException) return ErrorData(message: error.message, title: error.title, exception: error);
+      return null;
+    });
+void main() {
+  runZonedGuarded(() {
+    FlutterError.onError = (details) {
+      globalErrorHandler.handleFlutterError(details);
+    };
+    runApp(const MyApp());
+  }, (error, stack) {
+    globalErrorHandler.handleNonFlutterError(error, stack);
+  });
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -19,6 +35,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: globalErrorHandler.navigationKey,
       initialRoute: "/",
       routes: {
         "/": (context) => const Home(),
@@ -105,7 +122,12 @@ class _HomeState extends State<Home> {
                         );
                       });
                 },
-                child: const Text('Other Examples'))
+                child: const Text('Other Examples')),
+            ElevatedButton(
+                onPressed: () {
+                  throw ApiServerErrorException(innerSource: String);
+                },
+                child: const Text('Test Global Exception Handler'))
           ],
         ),
       ),
