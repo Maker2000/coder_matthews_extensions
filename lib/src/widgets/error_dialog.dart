@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../helpers/helpers.dart';
 
-Future<T?> showDefaultErrorDialog<T>(BuildContext context, ErrorData errorData) => showGeneralDialog(
-    context: context,
-    useRootNavigator: true,
-    pageBuilder: (context, animation1, animation2) => DefaultErrorDialog(errorData: errorData));
+Future<T?> showDefaultErrorDialog<T>(BuildContext context, OverlayState? overlay, ErrorData errorData) =>
+    showGeneralDialog(
+        context: context,
+        useRootNavigator: true,
+        pageBuilder: (context, animation1, animation2) => DefaultErrorDialog(errorData: errorData));
 
 class DefaultErrorDialog extends StatelessWidget {
   final ErrorData errorData;

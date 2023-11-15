@@ -1,3 +1,7 @@
+## 1.8.1
+
+- Made it so that [ControllerException] implements [Exception]
+
 ## 1.8.0
 
 - added a global error handler as well as a custom http client called [MakerHttpClient] that allows throwing exceptions on certain [Response] status codes from http.

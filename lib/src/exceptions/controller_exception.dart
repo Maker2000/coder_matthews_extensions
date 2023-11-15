@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 
 import '../extensions/extensions.dart';
 
-abstract interface class ControllerException {
+abstract interface class ControllerException implements Exception {
   Type get source;
   String get title;
   String get message;

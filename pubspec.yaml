@@ -1,7 +1,7 @@
 name: coder_matthews_extensions
 description: A collection of useful extensions used in most of my personal projects
 repository: https://github.com/Maker2000/coder_matthews_extensions
-version: 1.8.0
+version: 1.8.1
 # homepage: https://www.example.com
 
 environment:

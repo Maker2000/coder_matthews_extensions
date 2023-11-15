@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../helpers/helpers.dart';
 import '../widgets/widgets.dart';
 
-abstract class IAppErrorHandler {
+/// Implement this interface to allow for error handling controllers.
+abstract interface class IAppErrorHandler {
   void onError();
 }
 
@@ -30,7 +31,7 @@ abstract class IAppErrorHandler {
 /// Remember to assign the [navigationKey] to your router to allow for any [BuildContext] related error displaying.
 class GlobalErrorHandler {
   final Map<Type, IAppErrorHandler Function()> controllerHandlers;
-  final Future<T?> Function<T>(BuildContext context, ErrorData errorDetails) showErrorMessage;
+  final Future<T?> Function<T>(BuildContext context, OverlayState? overlay, ErrorData errorDetails) showErrorMessage;
   final ErrorData? Function(Object exception) convertException;
 
   /// Use this navigator key to enable the showing of any build context related error widgets
@@ -53,20 +54,25 @@ class GlobalErrorHandler {
           showErrorMessage: showDefaultErrorDialog,
           convertException: convertException);
 
-  /// This fu
-  void handleFlutterError(FlutterErrorDetails details) =>
-      _handleError(details.exception, () => FlutterError.presentError(details));
+  /// This function should be called to handle flutter errors
+  void handleFlutterError(FlutterErrorDetails details) => _handleError(details.exception, () {
+        FlutterError.presentError(details);
+      });
 
-  void handleNonFlutterError(Object error, StackTrace trace) => _handleError(error, () => throw error);
+  /// This function should be used to handle non flutter errors
+  void handleNonFlutterError(Object error, StackTrace trace) => _handleError(error, () {
+        throw error;
+      });
   void _executeControllerFunction(Type? source) {
-    if (source != null) {}
-    var controller = controllerHandlers[source];
-    if (controller != null) {
-      controller().onError();
+    if (source != null) {
+      var controller = controllerHandlers[source];
+      if (controller != null) {
+        controller().onError();
+      }
     }
   }
 
-  void _handleError(Object error, Function handleDefault) {
+  void _handleError(Object error, void Function() handleDefault) {
     var errorData = convertException.call(error);
     if (errorData == null) {
       handleDefault.call();
@@ -74,7 +80,7 @@ class GlobalErrorHandler {
     }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (navigationKey.currentContext != null) {
-        showErrorMessage(navigationKey.currentContext!, errorData).then((value) {
+        showErrorMessage(navigationKey.currentContext!, navigationKey.currentState!.overlay, errorData).then((value) {
           _executeControllerFunction(errorData.controllerSource);
         });
       } else {
