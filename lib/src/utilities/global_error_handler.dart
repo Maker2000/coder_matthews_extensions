@@ -6,7 +6,7 @@ import '../widgets/widgets.dart';
 
 /// Implement this interface to allow for error handling controllers.
 abstract interface class IAppErrorHandler {
-  void onError();
+  void onError(Object exception);
 }
 
 /// A [GlobalErrorHandler] to ahndle uncaught errors globally. The [handleException] function should be used to check the exception and return a
@@ -62,7 +62,7 @@ class GlobalErrorHandler {
   /// One can use an overlay widget to show the error as well.
   final Future<T?> Function<T>(BuildContext context, OverlayState? overlay, ErrorData errorDetails) showErrorMessage;
 
-  /// This function parameter accepts an [Object] exception and converts the data to an [ErrorData] objext,
+  /// This function parameter accepts an [Object] exception and converts the data to an [ErrorData] object,
   ///
   /// Simplified Example:
   /// ```dart
@@ -119,11 +119,11 @@ class GlobalErrorHandler {
   void handleNonFlutterError(Object error, StackTrace trace) => _handleError(error, () {
         throw error;
       });
-  void _executeControllerFunction(Type? source) {
+  void _executeControllerFunction(Object error, Type? source) {
     if (source != null) {
       var controller = controllerHandlers[source];
       if (controller != null) {
-        controller().onError();
+        controller().onError(error);
       }
     }
   }
@@ -137,7 +137,7 @@ class GlobalErrorHandler {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (navigationKey.currentContext != null) {
         showErrorMessage(navigationKey.currentContext!, navigationKey.currentState!.overlay, errorData).then((value) {
-          _executeControllerFunction(errorData.controllerSource);
+          _executeControllerFunction(errorData.exception, errorData.controllerSource);
         });
       } else {
         debugPrint(
