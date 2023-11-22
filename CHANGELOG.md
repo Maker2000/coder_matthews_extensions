@@ -1,3 +1,7 @@
+## 1.8.5
+
+- bug fixes
+
 ## 1.8.4
 
 - made assepted [ErrorData] more generic (T extends ErrorData)

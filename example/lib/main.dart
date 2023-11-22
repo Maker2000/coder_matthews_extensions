@@ -10,7 +10,7 @@ import 'global_error_data.dart';
 
 final globalErrorHandler = GlobalErrorHandler.withDefaultShowErrorDialog(
     controllerHandlers: {},
-    riverpodErrorWidget: (data) {
+    riverpodErrorWidget: (context, data) {
       return null;
     },
     handleException: (error) {

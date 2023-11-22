@@ -82,7 +82,7 @@ class GlobalErrorHandler<T extends ErrorData> {
   /// This is useful when initialising async riverpod providers. Should return an error widget when an error occurs during
   /// riverpod provider initialization
   /// related to the available [handleInitRiverpodProviderError] function.
-  final Widget? Function(T data) riverpodErrorWidget;
+  final Widget? Function(BuildContext context, T data) riverpodErrorWidget;
 
   /// Use this navigator key to enable the showing of any build context related error widgets
   late LabeledGlobalKey<NavigatorState> navigationKey;
@@ -102,7 +102,7 @@ class GlobalErrorHandler<T extends ErrorData> {
   factory GlobalErrorHandler.withDefaultShowErrorDialog(
           {required Map<Type, IAppErrorHandler Function()> controllerHandlers,
           required T? Function(Object exception) handleException,
-          required Widget? Function(T data) riverpodErrorWidget,
+          required Widget? Function(BuildContext context, T data) riverpodErrorWidget,
           LabeledGlobalKey<NavigatorState>? navKey}) =>
       GlobalErrorHandler(
           controllerHandlers: controllerHandlers,
@@ -156,9 +156,9 @@ class GlobalErrorHandler<T extends ErrorData> {
   /// ```
   ///
   /// Throws the exception if the exception is not handled in [handleException]
-  Widget? handleInitRiverpodProviderError(Object error, StackTrace trace) {
+  Widget? handleInitRiverpodProviderError(BuildContext context, Object error, StackTrace trace) {
     var data = handleException(error);
     if (data == null) throw error;
-    return riverpodErrorWidget(data);
+    return riverpodErrorWidget(context, data);
   }
 }
