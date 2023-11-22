@@ -1,3 +1,8 @@
+## 1.8.4
+
+- made assepted [ErrorData] more generic (T extends ErrorData)
+- bug fixes
+
 ## 1.8.3
 
 - added exception object as a parameter to [IAppErrorHandler]

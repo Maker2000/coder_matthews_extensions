@@ -10,7 +10,7 @@ abstract interface class IAppErrorHandler {
 }
 
 /// A [GlobalErrorHandler] to ahndle uncaught errors globally. The [handleException] function should be used to check the exception and return a
-/// nullable [ErrorData] object.
+/// nullable [T] that extends the [ErrorData] object.
 ///
 /// This can be used with the riperpod package
 ///
@@ -48,7 +48,7 @@ abstract interface class IAppErrorHandler {
 ///  String get title => 'App Error';
 /// }
 /// ```
-class GlobalErrorHandler {
+class GlobalErrorHandler<T extends ErrorData> {
   /// Represents the collection of controller handlers that will extend [IAppErrorHandler] in order to
   /// handle the errors globally. Useful when using providers in your application for state management
   ///
@@ -60,7 +60,7 @@ class GlobalErrorHandler {
 
   /// Represends the widget (normally an alert dialog) that displays the error when an exeption happens.
   /// One can use an overlay widget to show the error as well.
-  final Future<T?> Function<T>(BuildContext context, OverlayState? overlay, ErrorData errorDetails) showErrorMessage;
+  final Future<void> Function(BuildContext context, OverlayState? overlay, T errorDetails) showErrorMessage;
 
   /// This function parameter accepts an [Object] exception and converts the data to an [ErrorData] object,
   ///
@@ -77,12 +77,12 @@ class GlobalErrorHandler {
   ///     return null;
   ///  }
   /// ```
-  final ErrorData? Function(Object exception) handleException;
+  final T? Function(Object exception) handleException;
 
   /// This is useful when initialising async riverpod providers. Should return an error widget when an error occurs during
   /// riverpod provider initialization
   /// related to the available [handleInitRiverpodProviderError] function.
-  final Widget? Function(ErrorData data) riverpodErrorWidget;
+  final Widget? Function(T data) riverpodErrorWidget;
 
   /// Use this navigator key to enable the showing of any build context related error widgets
   late LabeledGlobalKey<NavigatorState> navigationKey;
@@ -101,8 +101,8 @@ class GlobalErrorHandler {
   /// the regular [GlobalErrorHandler] constructor for more customization.
   factory GlobalErrorHandler.withDefaultShowErrorDialog(
           {required Map<Type, IAppErrorHandler Function()> controllerHandlers,
-          required ErrorData? Function(Object exception) handleException,
-          required Widget? Function(ErrorData data) riverpodErrorWidget,
+          required T? Function(Object exception) handleException,
+          required Widget? Function(T data) riverpodErrorWidget,
           LabeledGlobalKey<NavigatorState>? navKey}) =>
       GlobalErrorHandler(
           controllerHandlers: controllerHandlers,
@@ -119,6 +119,7 @@ class GlobalErrorHandler {
   void handleNonFlutterError(Object error, StackTrace trace) => _handleError(error, () {
         throw error;
       });
+
   void _executeControllerFunction(Object error, Type? source) {
     if (source != null) {
       var controller = controllerHandlers[source];

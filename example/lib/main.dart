@@ -6,14 +6,19 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
 
+import 'global_error_data.dart';
+
 final globalErrorHandler = GlobalErrorHandler.withDefaultShowErrorDialog(
     controllerHandlers: {},
     riverpodErrorWidget: (data) {
       return null;
     },
     handleException: (error) {
-      if (error is Exception) return ErrorData(message: error.toString(), title: 'Error', exception: error);
-      if (error is ControllerException) return ErrorData(message: error.message, title: error.title, exception: error);
+      if (error is Exception) return GlobalErrorData(message: error.toString(), title: 'Error', exception: error);
+      if (error is ControllerException) {
+        return GlobalErrorData(
+            message: error.message, title: error.title, exception: error, controllerSource: error.source);
+      }
       return null;
     });
 void main() {
