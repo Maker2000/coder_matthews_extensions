@@ -13,10 +13,10 @@ void main() {
     CoderPerson(name: 'Bruce', age: 47, gender: Gender.male),
   ];
 
-  final oldestPerson = personList.maxElement((element) => element.age);
+  final oldestPerson = personList.max((element) => element.age);
   debugPrint(oldestPerson?.age.toString());
 
-  final youngestPerson = personList.minElement((element) => element.age);
+  final youngestPerson = personList.min((element) => element.age);
   debugPrint(youngestPerson?.age.toString());
 
   final group = personList.groupBy((e) => e.gender);

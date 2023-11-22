@@ -5,13 +5,14 @@ import 'enums.dart';
 
 class ExtensionHelper {
   static int sorter<T>(T? a, T? b, Error toThrow) {
-    switch (a.runtimeType) {
-      case num || double || int:
-        return _orderByHelper(a, b).$2 ? _orderByHelper(a, b).$1 : (a as num).compareTo(b as num);
-      case DateTime:
-        return _orderByHelper(a, b).$2 ? _orderByHelper(a, b).$1 : (a as DateTime).compareTo(b as DateTime);
-      case Duration:
-        return _orderByHelper(a, b).$2 ? _orderByHelper(a, b).$1 : (a as Duration).compareTo(b as Duration);
+    if (a is Comparable) return _orderByHelper(a, b).$2 ? _orderByHelper(a, b).$1 : a.compareTo(b);
+    switch (a) {
+      // case num:
+      //   return _orderByHelper(a, b).$2 ? _orderByHelper(a, b).$1 : (a as num).compareTo(b as num);
+      // case DateTime:
+      //   return _orderByHelper(a, b).$2 ? _orderByHelper(a, b).$1 : (a as DateTime).compareTo(b as DateTime);
+      // case Duration:
+      //   return _orderByHelper(a, b).$2 ? _orderByHelper(a, b).$1 : (a as Duration).compareTo(b as Duration);
       case TimeOfDay:
         if (_orderByHelper(a, b).$2) {
           return _orderByHelper(a, b).$1;
@@ -20,8 +21,8 @@ class ExtensionHelper {
           var bTime = (b as TimeOfDay).hour + (b).minute / 60;
           return aTime.compareTo(bTime);
         }
-      case String:
-        return _orderByHelper(a, b).$2 ? _orderByHelper(a, b).$1 : a.toString().compareTo(b.toString());
+      // case String:
+      //   return _orderByHelper(a, b).$2 ? _orderByHelper(a, b).$1 : a.toString().compareTo(b.toString());
       default:
         try {
           return _orderByHelper(a, b).$2 ? _orderByHelper(a, b).$1 : (a as Enum).name.compareTo((b as Enum).name);

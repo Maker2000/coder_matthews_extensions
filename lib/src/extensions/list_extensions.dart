@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../helpers/classes.dart';
 import '../helpers/enums.dart';
 import '../helpers/extension_helper.dart';
@@ -56,48 +54,48 @@ extension NullableListExtn<T> on Iterable<T>? {
 
   /// Returns the maximum value of a collection of [T] elements.
   ///
-  /// [number] requires a [num] to be returned
+  /// [op] requires a [T] element to be returned.
+  ///
+  /// Supports: [num], [double], [int], [DateTime], [TimeOfDay], [Duration], [String], [Enum], [Comparable]
   ///
   /// Object Example:
   /// ``` dart
   /// final valueList = <Map<String, double>>[{"value": 1.3},{"value": 1},{"value": 2.7},];
   /// final max = valueList.maxValue((element) => element["value"]!);
-  /// print(average); // 2.7
+  /// print(max); // 2.7
   /// ```
   /// List of [double]   Example:
   /// ``` dart
   /// final valueList = <double>[1.3, 1, 2.7];
   /// final max = valueList.max((element) => element);
-  /// print(average); // 2.7
+  /// print(max); // 2.7
   /// ```
-  num maxValue(num Function(T value) number) {
-    if (isNull) return 0;
-    if (this!.isEmpty) return 0;
-    return this!.fold(number(this!.first),
-        (previousValue, element) => previousValue > number(element) ? previousValue : number(element));
+  T? max<K>(K Function(T value) op) {
+    if (isNullOrEmpty) return null;
+    return this!.orderBy(op, OrderDirection.desc).first;
   }
 
   /// Returns the minumum value of a collection of [T] elements.
   ///
-  /// [number] requires a [num] to be returned
+  /// [op] requires a [T] element to be returned.
+  ///
+  /// Supports: [num], [double], [int], [DateTime], [TimeOfDay], [Duration], [String], [Enum], [Comparable]
   ///
   /// Object Example:
   /// ``` dart
   /// final valueList = <Map<String, double>>[{"value": 1.3},{"value": 1},{"value": 2.7},];
-  /// final max = valueList.minValue((element) => element["value"]!);
-  /// print(average); // 1
+  /// final min = valueList.minValue((element) => element["value"]!);
+  /// print(min); // 1
   /// ```
   /// List of [double]   Example:
   /// ``` dart
   /// final valueList = <double>[1.3, 1, 2.7];
-  /// final max = valueList.minValue((element) => element);
-  /// print(average); // 1
+  /// final min = valueList.minValue((element) => element);
+  /// print(min); // 1
   /// ```
-  num minValue(num Function(T value) number) {
-    if (isNull) return 0;
-    if (this!.isEmpty) return 0;
-    return this!.fold(number(this!.first),
-        (previousValue, element) => previousValue < number(element) ? previousValue : number(element));
+  T? min<K>(K Function(T value) op) {
+    if (isNullOrEmpty) return null;
+    return this!.orderBy(op).first;
   }
 
   /// Groups a collection and returns a list of [Map<K, List<T>>] elements.
@@ -217,136 +215,6 @@ extension NullableListExtn<T> on Iterable<T>? {
     return this!.indexed.map((e) => op(e.$2, e.$1));
   }
 
-  /// Returns a [T] element with the maximum [DateTime] of a collection of [T] elements.
-  ///
-  /// [op] requires a [DateTime] to be returned. Returns [Null] if list is empty
-  ///
-  /// Object Example:
-  /// ``` dart
-  /// final dateList = <Map<String, DateTime>>[
-  ///   {"date": DateTime.now()},
-  ///   {"date": DateTime.now().add(Duration(days: 5))},
-  ///   {"date": DateTime.now().subtract(Duration(days: 5))},
-  /// ];
-  /// final max = dateList.maxDate((element) => element["date"]!);
-  /// print(max); // {"date": 5 days after the current date}
-  /// ```
-  /// List of [DateTime]   Example:
-  /// ``` dart
-  /// final dateList = <DateTime>[
-  ///   DateTime.now(),
-  ///   DateTime.now().add(Duration(days: 5),
-  ///   DateTime.now().subtract(Duration(days: 5)
-  /// ];
-  /// final max = dateList.maxDate((element) => element);
-  /// print(max); // Prints 5 days after the current date
-  /// ```
-  T? maxDate(DateTime Function(T element) op) {
-    if (this == null) return null;
-    if (this!.isEmpty) return null;
-    return this!.fold(
-      this!.firstOrNull,
-      (previousValue, element) => previousValue == null
-          ? element
-          : op(previousValue).isAfter(op(element))
-              ? previousValue
-              : element,
-    );
-  }
-
-  /// Returns a [T] element with the minimum [DateTime] of a collection of [T] elements.
-  ///
-  /// [op] requires a [DateTime] to be returned. Returns [Null] if list is empty
-  ///
-  /// Object Example:
-  /// ``` dart
-  /// final dateList = <Map<String, DateTime>>[
-  ///   {"date": DateTime.now()},
-  ///   {"date": DateTime.now().add(Duration(days: 5))},
-  ///   {"date": DateTime.now().subtract(Duration(days: 5))},
-  /// ];
-  /// final min = dateList.minDate((element) => element["date"]!);
-  /// print(min); // {"date": 5 days before the current date}
-  /// ```
-  /// List of [DateTime]   Example:
-  /// ``` dart
-  /// final dateList = <DateTime>[
-  ///   DateTime.now(),
-  ///   DateTime.now().add(Duration(days: 5),
-  ///   DateTime.now().subtract(Duration(days: 5),
-  /// ];
-  /// final min = dateList.minDate((element) => element);
-  /// print(min); // Prints 5 days before the current date
-  /// ```
-  T? minDate(DateTime Function(T element) op) {
-    if (this == null) return null;
-    if (this!.isEmpty) return null;
-    return this!.fold(
-      this!.firstOrNull,
-      (previousValue, element) => previousValue == null
-          ? element
-          : op(previousValue).isBefore(op(element))
-              ? previousValue
-              : element,
-    );
-  }
-
-  /// Returns the maximum [Element] of a collection of [T] elements.
-  ///
-  /// [number] requires a [num] to be returned. Returns a [Null] if list is empty
-  ///
-  /// Object Example:
-  /// ``` dart
-  /// final valueList = <Map<String, double>>[{"value": 1.3},{"value": 1},{"value": 2.7},];
-  /// final max = valueList.maxElement((element) => element["value"]!);
-  /// print(max); // {"value": 2.7}
-  /// ```
-  /// List of [double]   Example:
-  /// ``` dart
-  /// final valueList = <double>[1.3, 1, 2.7];
-  /// final max = valueList.maxElement((element) => element);
-  /// print(max); // 2.7
-  /// ```
-  T? maxElement(num Function(T element) number) {
-    if (this == null) return null;
-    if (this!.isEmpty) return null;
-    return this!.fold(
-        this!.firstOrNull,
-        (previousValue, element) => previousValue == null
-            ? element
-            : number(previousValue) > number(element)
-                ? previousValue
-                : element);
-  }
-
-  /// Returns the minumum [Element] of a collection of [T] elements.
-  ///
-  /// [number] requires a [num] to be returned. Returns [Null] if list is empty
-  ///
-  /// Object Example:
-  /// ``` dart
-  /// final valueList = <Map<String, double>>[{"value": 1.3},{"value": 1},{"value": 2.7},];
-  /// final min = valueList.minElement((element) => element["value"]!);
-  /// print(min); // {"value": 1}
-  /// ```
-  /// List of [double]   Example:
-  /// ``` dart
-  /// final valueList = <double>[1.3, 1, 2.7];
-  /// final min = valueList.minElement((element) => element);
-  /// print(min); // 1
-  /// ```
-  T? minElement(num Function(T element) number) {
-    if (this == null) return null;
-    if (this!.isEmpty) return null;
-    return this!.fold(
-        this!.firstOrNull,
-        (previousValue, element) => previousValue == null
-            ? element
-            : number(previousValue) < number(element)
-                ? previousValue
-                : element);
-  }
-
   // Iterable<T> intersect(Iterable<T> other, Map<String, dynamic> Function(T element) converter) {
   //   if (this == null) return List.empty();
   //   var es = this!
@@ -376,19 +244,22 @@ extension NullableListExtn<T> on Iterable<T>? {
 
   /// Returns a new list that is ordered by the property returned from the operation [op].
   ///
+  /// Supports: [num], [double], [int], [DateTime], [TimeOfDay], [Duration], [String], [Enum], [Comparable]
+  ///
   /// Will throw and [UnsupportedError] exception if the data type returned by the [op] is not supported in the sort
   Iterable<T> orderBy<K>(K? Function(T element) op, [OrderDirection dir = OrderDirection.asc]) {
     if (this == null) return [];
     var shadowThis = this!;
-    var res = List<T>.from(shadowThis)
+    return List<T>.from(shadowThis)
       ..sort((a, b) =>
           ExtensionHelper.sorter<K>(op(a), op(b), UnsupportedError('$K data type is not supported by this order by')) *
           (dir == OrderDirection.asc ? 1 : -1));
-    return res;
   }
 
   /// Returns a new list that is ordered by the list of properties returned from the operation [ops].
   /// NOTE: the list will be sorted by the order of the operations entered.
+  ///
+  /// Supports: [num], [double], [int], [DateTime], [TimeOfDay], [Duration], [String], [Enum]
   ///
   /// Will throw and [UnsupportedError] exception if the data type returned by the [op] is not supported in the sort
   /// Example:
@@ -410,12 +281,11 @@ extension NullableListExtn<T> on Iterable<T>? {
   Iterable<T> orderByMany<K>(List<MultiSorterArgs> Function(T element) ops) {
     if (this == null) return [];
     var shadowThis = this!;
-    var res = List<T>.from(shadowThis)
+    return List<T>.from(shadowThis)
       ..sort((a, b) {
         return ExtensionHelper.multipleSorter((index) => (ops(a)[index], ops(b)[index]),
             (dataType) => UnsupportedError('$dataType data type is not supported by this order by'), ops(a).length - 1);
       });
-    return res;
   }
 }
 
@@ -452,9 +322,11 @@ extension NullableListExtn2<T> on Iterable<T?>? {
 
 extension StringListExn on Iterable<String> {
   /// Checks if this Iterable of string contains a string [element] while ignoring the case
-  bool containsIgnoreCase(String? element) {
+  bool containsIgnoreCase(String? element, [bool trim = true]) {
     for (var e in this) {
-      if (e.toLowerCase() == element?.toLowerCase()) return true;
+      if (trim ? e.toLowerCase().trim() == element?.toLowerCase().trim() : e.toLowerCase() == element?.toLowerCase()) {
+        return true;
+      }
     }
     return false;
   }

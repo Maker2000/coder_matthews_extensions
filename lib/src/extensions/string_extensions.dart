@@ -123,10 +123,11 @@ extension StringExtn on String? {
   }
 
   /// Checks if [this] string is contained within a [Iterable] of strings while ignoring the case
-  bool inIgnoreCase(Iterable<String> data) => data.containsIgnoreCase(this);
+  bool inIgnoreCase(Iterable<String> data, [bool trim = true]) => data.containsIgnoreCase(this, trim);
 
   /// Checks if [this] string is equal to another string while ignoring the case
-  bool equalsIgnoreCase(String other) => this?.toLowerCase() == other.toLowerCase();
+  bool equalsIgnoreCase(String other, [bool trim = true]) =>
+      trim ? this?.toLowerCase().trim() == other.toLowerCase().trim() : this?.toLowerCase() == other.toLowerCase();
 
   /// Useful when using go_router. Adds a '/' in front of the name of the string.
   /// Will return an empty string if the string is null.

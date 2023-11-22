@@ -1,3 +1,12 @@
+## 1.8.2
+
+- **BREAKING CHANGES**:
+  - [maxElement], [maxDate], [maxValue] have been replaced with [max] which supports the comparable data type
+  - [minElement], [minDate], [minValue] have been replaced with [min] which supports the comparable data type
+- minor change to the [inIgnoreCase], [containsIgnoreCase] and [equalsIgnoreCase] functions. Now accepts an optional parameter [trim] for whether or not the strings should be trimmed for comparison.
+
+- [FutureHelper] now supports up to running 10 [Future] functions in parallel
+
 ## 1.8.1
 
 - Made it so that [ControllerException] implements [Exception]
@@ -9,6 +18,7 @@
 ## 1.7.0
 
 - added shimmer loading widgets (check the example project to see it in action!)
+
 - added a minor bug fix for checking whether device is a tablet or not
 
 ## 1.6.0
@@ -18,6 +28,7 @@
 ## 1.5.1
 
 - bug fixed for [orderBy] extension function
+
 - added an [order] function for list of nullable premitive data types
   - [Enum]
   - [DateTime]
@@ -25,6 +36,7 @@
   - [num]
   - [Duration]
   - [TimeOfDay]
+  - [Comparable]
 
 ## 1.5.0
 
@@ -47,9 +59,13 @@
   - [maxDate]
   - [mapWithIndex]
 - added a [maxParallelisms] property to [mapAsync] and [expandAsync]. (see in code docs for more)
+
 - other bug fixes with correcting documentation
+
 - added example widget pages to demonstrate using [getKeyPosition]
+
 - added extension functions on [Brightness]. Get functions [isLight] and [isDark]
+
 - **BREAKING CHANGES**:
   - class name changed from [PositionDate] to [WidgetPositionData]
   - properties name change in [PositionData] (now [WidgetPositionData])
@@ -76,6 +92,7 @@
 ## 1.2.2
 
 - **BREAKING CHANGE**: renamed [inIgnoreCase] to [containsIgnoreCase]
+
 - added an [inIgnoreCase] and [equalsIgnoreCase] to string extensions
 
 ## 1.2.1
@@ -89,12 +106,15 @@
 ## 1.1.0
 
 - added a new class [ValidationContract] for an exception workflow for validating conditions, null objects and empty/null strings.
+
 - added an extension on object for checking if any object is null.
+
 - **BREAKING CHANGE**: removed [compoundAnd] and [compoundOr] from list extensions as dart already has a function like it.
 
 ## 1.0.4
 
 - added [toJsonEncodedString] to map extensions and [toDecodedJson] to string entensions for converting to and from json.
+
 - added [addBetween] to list extensions.
 
 ## 1.0.3
@@ -104,11 +124,13 @@
 ## 1.0.2
 
 - Added [splitCamelCase] funtion to string extensions.
+
 - Added enum extensions.
 
 ## 1.0.1
 
 - Added [firstOrNull] function to list extensions.
+
 - Added a [removeNulls] function on map types.
 
 ## 1.0.0

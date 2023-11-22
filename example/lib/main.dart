@@ -8,7 +8,10 @@ import 'package:coder_matthews_extensions/coder_matthews_extensions.dart';
 
 final globalErrorHandler = GlobalErrorHandler.withDefaultShowErrorDialog(
     controllerHandlers: {},
-    convertException: (error) {
+    riverpodErrorWidget: (data) {
+      return null;
+    },
+    handleException: (error) {
       if (error is Exception) return ErrorData(message: error.toString(), title: 'Error', exception: error);
       if (error is ControllerException) return ErrorData(message: error.message, title: error.title, exception: error);
       return null;

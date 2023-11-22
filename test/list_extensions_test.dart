@@ -22,16 +22,16 @@ void main() {
   });
 
   test('shouldGetMaxValue', () {
-    final max = valueList.maxValue((element) => element);
+    final max = valueList.max((element) => element);
     expect(max, 2.7);
-    final oldestPerson = personList.maxElement((element) => element.age);
+    final oldestPerson = personList.max((element) => element.age);
     expect(oldestPerson?.age, 56);
   });
 
   test('shouldGetMinValue', () {
-    final min = valueList.minValue((element) => element);
+    final min = valueList.min((element) => element);
     expect(min, 1);
-    final youngestPerson = personList.minElement((element) => element.age);
+    final youngestPerson = personList.min((element) => element.age);
     expect(youngestPerson?.age, 16);
   });
 
