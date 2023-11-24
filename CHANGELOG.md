@@ -1,3 +1,8 @@
+## 1.8.6
+
+- bug fixes relating to [GlobalErrorHandler]
+- added a few string exceptions: [remove] which removes characters from a string
+
 ## 1.8.5
 
 - bug fixes

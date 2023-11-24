@@ -334,7 +334,10 @@ extension StringListExn on Iterable<String> {
 
 extension FutureListExtn<TSouce> on Future<Iterable<TSouce>> {
   /// converts a [Future]<[Iterable]> to a [Future]<[List]>
-  Future<List<TSouce>> toListAsync() {
-    return then((value) => value.toList());
-  }
+  Future<List<TSouce>> toListAsync() => then((value) => value.toList());
+}
+
+extension FutureListListExtn<TSouce> on Future<Iterable<Iterable<TSouce>>> {
+  /// converts a [Future]<[Iterable]<[Iterable]>> to a [Future]<[List]>
+  Future<List<TSouce>> toListFlattenAsync() => then((value) => value.expand((element) => element).toList());
 }

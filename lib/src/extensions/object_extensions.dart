@@ -1,3 +1,5 @@
+import 'list_extensions.dart';
+
 extension ObjectExn on Object? {
   bool get isNull => this == null;
   bool get isNotNull => this != null;
@@ -15,6 +17,12 @@ extension ObjectExn on Object? {
 }
 
 extension FutureExn<T> on Future<T?> {
-  Future<bool> get isNull async => (await this) == null;
-  Future<bool> get isNotNull async => (await this) != null;
+  /// Checks if value of future is null
+  Future<bool> get isNull => then((value) => value == null);
+
+  /// Checks if value of future is not null
+  Future<bool> get isNotNull => then((value) => value != null);
+
+  /// Returns future value as a [List]
+  Future<List<T>> toListAsync() => then((value) => [value].removeNulls.toList());
 }

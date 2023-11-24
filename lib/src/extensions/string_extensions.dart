@@ -132,4 +132,8 @@ extension StringExtn on String? {
   /// Useful when using go_router. Adds a '/' in front of the name of the string.
   /// Will return an empty string if the string is null.
   String get toRoute => this == null ? "" : "/$this";
+
+  /// Takes a nullable string and removes the [pattern] string from the string.
+  String? remove(String pattern, [bool ignoreCase = true]) =>
+      this?.replaceAll(RegExp(pattern, caseSensitive: !ignoreCase), '');
 }

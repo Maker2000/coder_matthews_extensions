@@ -120,13 +120,14 @@ class GlobalErrorHandler<T extends ErrorData> {
         throw error;
       });
 
-  void _executeControllerFunction(Object error, Type? source) {
-    if (source != null) {
-      var controller = controllerHandlers[source];
+  void _executeControllerFunction(T errorData) {
+    if (errorData.controllerSource != null) {
+      var controller = controllerHandlers[errorData.controllerSource!];
       if (controller != null) {
-        controller().onError(error);
+        controller().onError(errorData.exception);
       }
     }
+    errorData.onError?.call();
   }
 
   void _handleError(Object error, void Function() handleDefault) {
@@ -138,9 +139,10 @@ class GlobalErrorHandler<T extends ErrorData> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (navigationKey.currentContext != null) {
         showErrorMessage(navigationKey.currentContext!, navigationKey.currentState!.overlay, errorData).then((value) {
-          _executeControllerFunction(errorData.exception, errorData.controllerSource);
+          _executeControllerFunction(errorData);
         });
       } else {
+        _executeControllerFunction(errorData);
         debugPrint(
             'It seems that the navigator key for this global error handler is not attached to a navigator, hence why the displaying of errors didn\'t happen');
         debugPrintStack(stackTrace: StackTrace.current);

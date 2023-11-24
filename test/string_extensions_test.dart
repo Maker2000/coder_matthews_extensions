@@ -67,4 +67,11 @@ void main() {
     var decodedJson = testString.toDecodedJson;
     expect(control, decodedJson);
   });
+
+  test('shouldRemoveCharactersFromString', () {
+    var control = 'Test String';
+    var testString = "Testk StringkK";
+    var decodedJson = testString.remove('k');
+    expect(control, decodedJson);
+  });
 }
