@@ -14,13 +14,15 @@ import 'multipart_request_with_progress.dart';
 ///
 /// Use [handleResponse] to return a nullable exception should the response status code is not 200. Setting this to null will not throw any exceptions.
 ///
-/// Check out the factory methods [createDefault] and [createDefaultWithHandleResponse]
+/// Check out the factory methods [CoderHttpClient.createDefault] and [CoderHttpClient.createDefaultWithHandleResponse]
 class CoderHttpClient {
   late Client innerClient;
   final Future<Map<String, String>> Function()? baseHeaders;
-  final ControllerException? Function(Response response, Type source)? handleResponse;
+  final OnHttpResponse? handleResponse;
   final ControllerException Function(String errorMessage, Type source) socketException;
   final ControllerException Function(Type source) timeoutException;
+
+  /// Creats a [CoderHttpClient]
   CoderHttpClient(
       {required this.socketException,
       required this.timeoutException,
@@ -32,7 +34,7 @@ class CoderHttpClient {
 
   /// Creates a default [CoderHttpClient] that sets the [socketException] and [timeoutException] properties to a [ApiSocketException] and [ApiTimeoutException] respectively.
   factory CoderHttpClient.createDefault({
-    ControllerException? Function(Response response, Type source)? handleResponse,
+    OnHttpResponse? handleResponse,
     Future<Map<String, String>> Function()? baseHeaders,
     Client? innerClient,
   }) =>
@@ -75,7 +77,7 @@ class CoderHttpClient {
     }
   }
 
-  Future<Map<String, String>> getHeaders(Map<String, String>? headers) async {
+  Future<Map<String, String>> _getHeaders(Map<String, String>? headers) async {
     var newHeaders = await baseHeaders?.call() ?? {};
     if (headers != null) {
       newHeaders.addAll(headers);
@@ -152,7 +154,7 @@ class CoderHttpClient {
   ///
   /// Throws an exception defined in [handleResponse] should the response status code not be 200
   Future<Response> get<TSource>(Uri uri, {Map<String, String>? headers}) {
-    return _executeRequest<TSource>(() async => await innerClient.get(uri, headers: await getHeaders(headers)));
+    return _executeRequest<TSource>(() async => await innerClient.get(uri, headers: await _getHeaders(headers)));
   }
 
   /// Wrapper function that sends an HTTP POST request with the given headers and body to the given
@@ -179,7 +181,7 @@ class CoderHttpClient {
   /// Throws an exception defined in [handleResponse] should the response status code not be 200
   Future<Response> post<TSource>(Uri uri, {Map<String, String>? headers, Object? body, Encoding? encoding}) {
     return _executeRequest<TSource>(
-        () async => await innerClient.post(uri, headers: await getHeaders(headers), body: body, encoding: encoding));
+        () async => await innerClient.post(uri, headers: await _getHeaders(headers), body: body, encoding: encoding));
   }
 
   /// Wrapper function that sends an HTTP PUT request with the given headers and body to the given
@@ -204,7 +206,7 @@ class CoderHttpClient {
   /// Throws an exception defined in [handleResponse] should the response status code not be 200
   Future<Response> put<TSource>(Uri uri, {Map<String, String>? headers, Object? body, Encoding? encoding}) {
     return _executeRequest<TSource>(
-        () async => await innerClient.put(uri, headers: await getHeaders(headers), body: body, encoding: encoding));
+        () async => await innerClient.put(uri, headers: await _getHeaders(headers), body: body, encoding: encoding));
   }
 
   /// Wrapper function that sends an HTTP DELETE request with the given headers to the given URL.
@@ -214,7 +216,7 @@ class CoderHttpClient {
   /// Throws an exception defined in [handleResponse] should the response status code not be 200
   Future<Response> delete<TSource>(Uri uri, {Map<String, String>? headers, Object? body, Encoding? encoding}) {
     return _executeRequest<TSource>(
-        () async => await innerClient.delete(uri, headers: await getHeaders(headers), body: body, encoding: encoding));
+        () async => await innerClient.delete(uri, headers: await _getHeaders(headers), body: body, encoding: encoding));
   }
 
   /// Wrapper function that sends an HTTP PATCH request with the given headers and body to the given
@@ -239,7 +241,7 @@ class CoderHttpClient {
   /// Throws an exception defined in [handleResponse] should the response status code not be 200
   Future<Response> patch<TSource>(Uri uri, {Map<String, String>? headers, Object? body, Encoding? encoding}) {
     return _executeRequest<TSource>(
-        () async => await innerClient.patch(uri, headers: await getHeaders(headers), body: body, encoding: encoding));
+        () async => await innerClient.patch(uri, headers: await _getHeaders(headers), body: body, encoding: encoding));
   }
 
   /// Wrapper function that sends an HTTP HEAD request with the given headers to the given URL.
@@ -248,7 +250,7 @@ class CoderHttpClient {
   ///
   /// Throws an exception defined in [handleResponse] should the response status code not be 200
   Future<Response> head<TSource>(Uri uri, {Map<String, String>? headers}) {
-    return _executeRequest<TSource>(() async => await innerClient.head(uri, headers: await getHeaders(headers)));
+    return _executeRequest<TSource>(() async => await innerClient.head(uri, headers: await _getHeaders(headers)));
   }
 
   /// Wrapper function that sends an HTTP GET request with the given headers to the given URL and
@@ -260,7 +262,7 @@ class CoderHttpClient {
   /// For more fine-grained control over the request and response, use [send] or
   /// [get] instead.
   Future<String> read<TSource>(Uri uri, {Map<String, String>? headers}) {
-    return _tryRequest<TSource, String>(() async => await innerClient.read(uri, headers: await getHeaders(headers)));
+    return _tryRequest<TSource, String>(() async => await innerClient.read(uri, headers: await _getHeaders(headers)));
   }
 
   /// Wrapper function that sends an HTTP GET request with the given headers to the given URL and
@@ -273,7 +275,7 @@ class CoderHttpClient {
   /// For more fine-grained control over the request and response, use [send] or
   /// [get] instead.
   Future<Uint8List> readBytes<TSource>(Uri uri, {Map<String, String>? headers}) {
-    return _tryRequest<TSource, Uint8List>(() async => innerClient.readBytes(uri, headers: await getHeaders(headers)));
+    return _tryRequest<TSource, Uint8List>(() async => innerClient.readBytes(uri, headers: await _getHeaders(headers)));
   }
 
   /// Closes the client and cleans up any resources associated with it.

@@ -98,9 +98,8 @@ class Shimmer extends StatefulWidget {
   final LinearGradient linearGradient;
   final Widget? child;
   static _ShimmerState? of(BuildContext context) => context.findAncestorStateOfType<_ShimmerState>();
-  Shimmer.create({Key? key, required Brightness brightness, this.child})
-      : linearGradient = shimmerGradient(brightness),
-        super(key: key);
+  Shimmer.create({super.key, required Brightness brightness, this.child})
+      : linearGradient = shimmerGradient(brightness);
   @override
   State<Shimmer> createState() => _ShimmerState();
 }

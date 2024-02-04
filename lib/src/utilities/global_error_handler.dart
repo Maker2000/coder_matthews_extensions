@@ -87,6 +87,7 @@ class GlobalErrorHandler<T extends ErrorData> {
   /// Use this navigator key to enable the showing of any build context related error widgets
   late LabeledGlobalKey<NavigatorState> navigationKey;
 
+  /// Creates a [GlobalErrorHandler] object.
   GlobalErrorHandler({
     required this.controllerHandlers,
     required this.showErrorMessage,

@@ -74,4 +74,12 @@ void main() {
     var decodedJson = testString.remove('k');
     expect(control, decodedJson);
   });
+
+  test('shouldGetFileNameAndFileExtension', () {
+    var filename = 'test.file.xml';
+    var extensionControl = '.xml';
+    var actualFileNameExtensionControl = 'test.file';
+    expect(filename.fileExtension, extensionControl);
+    expect(filename.actualFileName, actualFileNameExtensionControl);
+  });
 }

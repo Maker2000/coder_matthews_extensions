@@ -1,3 +1,10 @@
+## 1.8.7
+
+- bug fixes: unable to extend [ControllerException]
+- **BREAKING CHANGE** remove [CoderMatthewsExtensions.isTablet] function, moved to [TabletExtensions.isTablet]
+- added [fileExtension] and [actualFileExtension] to string extensions
+- updated packages
+
 ## 1.8.6
 
 - bug fixes relating to [GlobalErrorHandler]

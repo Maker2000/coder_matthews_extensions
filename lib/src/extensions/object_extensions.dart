@@ -5,10 +5,10 @@ extension ObjectExn on Object? {
   bool get isNotNull => this != null;
   bool get isPrimitiveDataType {
     switch (runtimeType) {
-      case String:
-      case num:
-      case DateTime:
-      case bool:
+      case const (String):
+      case const (num):
+      case const (DateTime):
+      case const (bool):
         return true;
       default:
         return false;

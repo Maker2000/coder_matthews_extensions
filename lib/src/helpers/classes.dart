@@ -7,6 +7,7 @@ class MultiSorterArgs<T> {
   MultiSorterArgs({required this.field, this.orderDirection = OrderDirection.asc});
 }
 
+/// Represents the data used in the [GlobalErrorHandler]'s
 abstract class ErrorData {
   final String message;
   final String title;

@@ -136,4 +136,16 @@ extension StringExtn on String? {
   /// Takes a nullable string and removes the [pattern] string from the string.
   String? remove(String pattern, [bool ignoreCase = true]) =>
       this?.replaceAll(RegExp(pattern, caseSensitive: !ignoreCase), '');
+
+  /// Returns file extension should the string be a filename. Returns null of not a proper file name.
+  String? get fileExtension {
+    var extension = this?.split('.').lastOrNull;
+    return extension == null ? null : ".$extension";
+  }
+
+  /// Returns file name should the string be a filename with extension. Returns null of not a proper file name.
+  String? get actualFileName {
+    var extension = this?.fileExtension;
+    return this?.replaceAll(extension ?? '', '');
+  }
 }

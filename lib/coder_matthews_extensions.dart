@@ -14,9 +14,6 @@ export 'src/utilities/utilities.dart';
 class CoderMatthewsExtensions {
   /// Returns the playform version
   Future<String?> getPlatformVersion() => CoderMatthewsExtensionsPlatform.instance.getPlatformVersion();
-
-  /// Returns whether the current device is a tablet or not
-  static Future<bool> isTablet() => CoderMatthewsExtensionsPlatform.instance.isTablet();
 }
 
 class TabletExtensions {
