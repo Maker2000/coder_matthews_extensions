@@ -1,3 +1,7 @@
+## 1.9.0
+
+- added a new helper, the [JsonHelper] that makes it easier to make more generic json encoding and decoding.
+
 ## 1.8.7
 
 - bug fixes: unable to extend [ControllerException]

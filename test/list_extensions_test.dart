@@ -148,7 +148,7 @@ void main() {
     // ignore: unused_local_variable
     var nullableList = [
       ...personList,
-      CoderPerson(name: "Jannet", age: 16, gender: null),
+      CoderPerson(name: "Jannet", age: 16, gender: Gender.male),
     ].orderBy((element) => element.gender);
     // ignore: unused_local_variable
     var sortedList = personList.orderByMany(
