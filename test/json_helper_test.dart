@@ -9,7 +9,7 @@ void main() {
   test("shouldEncodeJson", () {
     var data = {'name': "John Doe", 'age': 14, 'gender': 'male'};
     var decodedData = CoderPerson(name: 'John Doe', age: 14, gender: Gender.male);
-    var testDecodedPerson = JsonHelper.instance.decode<CoderPerson>(data);
+    var testDecodedPerson = JsonHelper.instance.decodeWithType(CoderPerson, data);
     expect(testDecodedPerson?.age, decodedData.age);
   });
 }

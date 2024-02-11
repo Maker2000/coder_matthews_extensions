@@ -1,3 +1,10 @@
+## 1.9.1
+
+- added another two functions to the [JsonHelper]:
+  - [encodeWithType]
+  - [decodeWithType]
+- cleaned up function documentation.
+
 ## 1.9.0
 
 - added a new helper, the [JsonHelper] that makes it easier to make more generic json encoding and decoding.
