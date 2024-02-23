@@ -9,7 +9,7 @@ class CoderPerson {
   CoderPerson({required this.name, required this.age, required this.gender});
 
   String get _generateRandomEmail => '${name.replaceAll(' ', '').toLowerCase()}${name.length}@codermail.com';
-  Map<String, dynamic> toJson() => {'name': name, 'age': age, 'gender': gender.name, 'email': email};
+  Map<String, dynamic> toJson() => {'name': name, 'age': age, 'gender': gender.name};
   factory CoderPerson.decode(Map<String, dynamic> json) => CoderPerson(
       name: json['name'], age: json['age'], gender: Gender.values.byNameOrNull(json['gender']) ?? Gender.male);
 }

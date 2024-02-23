@@ -75,7 +75,7 @@ class JsonHelper {
   Map<String, dynamic>? encode<T>(T data) {
     var mapper = _serializers[T];
     if (mapper == null) return null;
-    return mapper.encode(data);
+    return mapper._privateEncode(data);
   }
 
   /// Use this function to encode some [dynamic] data (useful for more dynamic applications)
@@ -89,7 +89,7 @@ class JsonHelper {
   Map<String, dynamic>? encodeWithType(Type dataType, dynamic data) {
     var mapper = _serializers[dataType];
     if (mapper == null) return null;
-    return mapper.encode(data);
+    return mapper._privateEncode(data);
   }
 }
 
@@ -101,6 +101,8 @@ class JsonSerializerItem<TEntity> {
 
   /// The encoder class. It converts [TEntity] data to a [Map<String, dynamic>] object.
   final Map<String, dynamic> Function(TEntity data) encode;
+
+  Map<String, dynamic> _privateEncode(dynamic data) => encode(data as TEntity);
 
   /// The [Type] of the [TEntity] object.
   Type get convertionType => TEntity;
