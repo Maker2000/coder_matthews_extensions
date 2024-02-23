@@ -36,6 +36,8 @@ class JsonHelper {
     }
   }
 
+  Map<Type, JsonSerializerItem> get serializers => _serializers;
+
   /// Use this function to decode a [Map<String, dynamic>] json object to [T] object.
   ///
   /// Example:
@@ -84,8 +86,8 @@ class JsonHelper {
   /// SomeClass data = SomeClass(...);
   /// var jsonData = JsonHelper.instance.encodeWithType(data); // convert to json data
   /// ```
-  Map<String, dynamic>? encodeWithType(dynamic data) {
-    var mapper = _serializers[data.runtimeType];
+  Map<String, dynamic>? encodeWithType(Type dataType, dynamic data) {
+    var mapper = _serializers[dataType];
     if (mapper == null) return null;
     return mapper.encode(data);
   }
@@ -100,7 +102,7 @@ class JsonSerializerItem<TEntity> {
   /// The encoder class. It converts [TEntity] data to a [Map<String, dynamic>] object.
   final Map<String, dynamic> Function(TEntity data) encode;
 
-  /// The runtime [Type] of the [TEntity] object.
+  /// The [Type] of the [TEntity] object.
   Type get convertionType => TEntity;
   JsonSerializerItem({required this.decode, required this.encode});
 }

@@ -1,3 +1,11 @@
+## 1.9.3
+
+- added bug fixes to the [JsonHelper]:
+
+## 1.9.2
+
+- added bug fixes to the [JsonHelper]
+
 ## 1.9.1
 
 - added another two functions to the [JsonHelper]:
