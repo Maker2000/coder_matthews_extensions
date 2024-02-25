@@ -36,8 +36,6 @@ class JsonHelper {
     }
   }
 
-  Map<Type, JsonSerializerItem> get serializers => _serializers;
-
   /// Use this function to decode a [Map<String, dynamic>] json object to [T] object.
   ///
   /// Example:
@@ -51,15 +49,15 @@ class JsonHelper {
     return mapper.decode(json);
   }
 
-  /// Use this function to decode a [Map<String, dynamic>] json object to [dynamic] object
+  /// Use this function to decode a [Map<String, dynamic>] json object to [Object] object
   /// by passing in the [Type] data type as a parameter.
   ///
   /// Example:
   /// ``` dart
   /// var jsonData = {...} // adding some data
-  /// var data = JsonHelper.instance.decodeWithType(SomeClass, jsonData);
+  /// var data = JsonHelper.instance.decodeWithType(SomeClass, jsonData) as SomeClass;
   /// ```
-  dynamic decodeWithType(Type dataType, Map<String, dynamic> json) {
+  Object? decodeWithType(Type dataType, Map<String, dynamic> json) {
     var mapper = _serializers[dataType];
     if (mapper == null) return null;
     return mapper.decode(json);

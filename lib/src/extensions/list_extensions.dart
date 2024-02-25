@@ -242,6 +242,18 @@ extension NullableListExtn<T> on Iterable<T>? {
     return res;
   }
 
+  /// Returns a iterable that combines the elements within both this [Iterable] and the [other]
+  /// [Iterable] without duplicates using the returning property coming from the predicate
+  Iterable<T> unionBy<K>(Iterable<T> other, K Function(T item) predicate) {
+    if (this == null) return List.empty();
+    var res = List.of(this!);
+    var otherConverted = other.map(predicate);
+    for (var e in this!) {
+      if (!otherConverted.contains(predicate(e))) res.add(e);
+    }
+    return res;
+  }
+
   /// Returns a new list that is ordered by the property returned from the operation [op].
   ///
   /// Supports: [num], [double], [int], [DateTime], [TimeOfDay], [Duration], [String], [Enum], [Comparable]

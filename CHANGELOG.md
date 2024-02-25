@@ -1,3 +1,7 @@
+## 1.9.5
+
+- Updated packages
+
 ## 1.9.4
 
 - added bug fixes to the [JsonHelper]:

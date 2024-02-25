@@ -144,6 +144,13 @@ void main() {
         res.map((e) => e.toJson()), [CoderPerson(name: "Jane", age: 16, gender: Gender.female)].map((e) => e.toJson()));
   });
 
+  test('shouldUnionByLists', () {
+    var intesectList = [1, 2, 3];
+    var mainList = [2, 3, 4, 5];
+    var res = mainList.unionBy(intesectList, (e) => e);
+    expect(res, [1, 2, 3, 4, 5]);
+  });
+
   test('shouldOrderByLists', () {
     // ignore: unused_local_variable
     var nullableList = [
