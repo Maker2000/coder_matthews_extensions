@@ -6,10 +6,10 @@ public class CoderMatthewsExtensionsPlugin: NSObject, FlutterPlugin, VNDocumentC
   public static func register(with registrar: FlutterPluginRegistrar) {
       let channel = FlutterMethodChannel(name: "coder_matthews_extensions", binaryMessenger: registrar.messenger())
       let instance = CoderMatthewsExtensionsPlugin()
-      let documentCameraViewController = VNDocumentCameraViewController()
-      documentCameraViewController.delegate = self
-      let scanViewFactory = CameraScanFactoryView(messenger: registrar.messenger())
-      registrar.register(scanViewFactory , withId: "scan_view")
+      // let documentCameraViewController = VNDocumentCameraViewController()
+      // documentCameraViewController.delegate = self
+      // let scanViewFactory = CameraScanFactoryView(messenger: registrar.messenger())
+      // registrar.register(scanViewFactory , withId: "scan_view")
       registrar.addMethodCallDelegate(instance, channel: channel)
   }
 

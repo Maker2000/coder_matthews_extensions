@@ -1,3 +1,7 @@
+## 1.9.6
+
+- Build error fix
+
 ## 1.9.5
 
 - Updated packages
