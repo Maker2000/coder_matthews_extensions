@@ -7,16 +7,10 @@ extension StringExtn on String? {
   static final _splitRegEx = RegExp(r"(?=(?!^)[A-Z])");
 
   ///Returns a bool whether string value is null or empty
-  bool get isNullOrEmpty {
-    if (isNull) return true;
-    return this!.isEmpty;
-  }
+  bool get isNullOrEmpty => this?.isEmpty ?? true;
 
   /// Returns a bool value whether string value is not null or empty
-  bool get isNotNullOrEmpty {
-    if (isNull) return false;
-    return this!.isNotEmpty;
-  }
+  bool get isNotNullOrEmpty => this?.isNotEmpty ?? false;
 
   /// Returns the sentence case of this string value.
   /// Example:

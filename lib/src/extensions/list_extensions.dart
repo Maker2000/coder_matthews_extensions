@@ -176,16 +176,10 @@ extension NullableListExtn<T> on Iterable<T>? {
   }
 
   /// Returns a [bool] whether or not this [List] is null or empty
-  bool get isNullOrEmpty {
-    if (isNull) return true;
-    return this!.isEmpty;
-  }
+  bool get isNullOrEmpty => this?.isEmpty ?? true;
 
   /// Returns a [bool] whether or not this [List] is not null or empty
-  bool get isNotNullOrEmpty {
-    if (isNull) return false;
-    return this!.isEmpty;
-  }
+  bool get isNotNullOrEmpty => this?.isNotEmpty ?? false;
 
   /// An expand function that applies an [expand] operation to futures.
   /// Specify a [maxParallelisms] ie: the amount of futures to be run at once till the list is completed. Defaults to 1

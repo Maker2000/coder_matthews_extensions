@@ -1,3 +1,7 @@
+## 1.9.7
+
+- [IsNotNullOrEmpty] bug fix
+
 ## 1.9.6
 
 - Build error fix
