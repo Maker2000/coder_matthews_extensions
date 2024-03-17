@@ -1,3 +1,12 @@
+## 1.10.0
+
+- added new widget [Unfocus] which can help to unfocus text input fields when the user taps outside the input field.
+- add a new extention category [ColorExtenstions]. Comes with the following functions; check the in code documentation for the function:
+
+  - [withHue]
+  - [withSaturation]
+  - [withValue]
+
 ## 1.9.7
 
 - [IsNotNullOrEmpty] bug fix
