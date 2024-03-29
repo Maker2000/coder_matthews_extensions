@@ -142,4 +142,49 @@ extension StringExtn on String? {
     var extension = this?.fileExtension;
     return this?.replaceAll(extension ?? '', '');
   }
+
+  /// Converts a 'camelCase' string to a 'PascalCase' string
+  String get camelCaseToPascalCase {
+    if (this == null) return '';
+    var ghostThis = this!;
+    return ghostThis[0].toUpperCase() + ghostThis.substring(1);
+  }
+
+  /// Converts a 'camelCase' string to a 'snake_case' string
+  String get camelCaseToSnakeCase {
+    if (this == null) return '';
+    var ghostThis = this!;
+    var elements = ghostThis.splitCamelCaseList;
+    return elements.join('_').toLowerCase();
+  }
+
+  /// Converts a 'PascalCase' string to a 'camelCase' string
+  String get pascalCaseToCamelCase {
+    if (this == null) return '';
+    var ghostThis = this!;
+    return ghostThis[0].toLowerCase() + ghostThis.substring(1);
+  }
+
+  /// Converts a 'PascalCase' string to a 'snake_case' string
+  String get pascalCaseToSnakeCase {
+    return camelCaseToSnakeCase;
+  }
+
+  /// Converts a 'snake_case' string to a 'camelCase' string
+  String get snakeCaseToCamelCase {
+    if (this == null) return '';
+    var ghostThis = this!;
+    return ghostThis
+        .toLowerCase()
+        .split('_')
+        .mapWithIndex((element, index) => index == 0 ? element : element.titleCase)
+        .join();
+  }
+
+  /// Converts a 'snake_case' string to a 'PascalCase' string
+  String get snakeCaseToPascalCase {
+    if (this == null) return '';
+    var ghostThis = this!;
+    return ghostThis.toLowerCase().split('_').map((element) => element.titleCase).join();
+  }
 }

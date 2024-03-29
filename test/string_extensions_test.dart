@@ -82,4 +82,16 @@ void main() {
     expect(filename.fileExtension, extensionControl);
     expect(filename.actualFileName, actualFileNameExtensionControl);
   });
+
+  test('shouldConvertStringToCases', () {
+    var snakeCase = 'word_case';
+    var pascalCase = 'WordCase';
+    var camelCase = 'wordCase';
+    expect(camelCase.camelCaseToSnakeCase, snakeCase);
+    expect(camelCase.camelCaseToPascalCase, pascalCase);
+    expect(snakeCase.snakeCaseToCamelCase, camelCase);
+    expect(snakeCase.snakeCaseToPascalCase, pascalCase);
+    expect(pascalCase.pascalCaseToCamelCase, camelCase);
+    expect(pascalCase.pascalCaseToSnakeCase, snakeCase);
+  });
 }

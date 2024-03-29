@@ -1,3 +1,11 @@
+## 1.10.1
+
+- slight change to how base headers are accepted for the [CoderHttpClient]. It now takes a [FutureOr] rather than a [Future]
+- added three new functions to StringExtensions and EnumExtensions
+  - [camelCaseToPascalCase]
+  - [camelCaseToSnakeCase]
+  - [pascalCaseToCamelCase]
+
 ## 1.10.0
 
 - added new widget [Unfocus] which can help to unfocus text input fields when the user taps outside the input field.

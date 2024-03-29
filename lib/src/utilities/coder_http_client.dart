@@ -17,7 +17,7 @@ import 'multipart_request_with_progress.dart';
 /// Check out the factory methods [CoderHttpClient.createDefault] and [CoderHttpClient.createDefaultWithHandleResponse]
 class CoderHttpClient {
   late Client innerClient;
-  final Future<Map<String, String>> Function()? baseHeaders;
+  final FutureOr<Map<String, String>> Function()? baseHeaders;
   final OnHttpResponse? handleResponse;
   final ControllerException Function(String errorMessage, Type source) socketException;
   final ControllerException Function(Type source) timeoutException;
@@ -77,7 +77,7 @@ class CoderHttpClient {
     }
   }
 
-  Future<Map<String, String>> _getHeaders(Map<String, String>? headers) async {
+  FutureOr<Map<String, String>> _getHeaders(Map<String, String>? headers) async {
     var newHeaders = await baseHeaders?.call() ?? {};
     if (headers != null) {
       newHeaders.addAll(headers);
