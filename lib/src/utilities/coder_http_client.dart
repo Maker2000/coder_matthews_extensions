@@ -35,7 +35,7 @@ class CoderHttpClient {
   /// Creates a default [CoderHttpClient] that sets the [socketException] and [timeoutException] properties to a [ApiSocketException] and [ApiTimeoutException] respectively.
   factory CoderHttpClient.createDefault({
     OnHttpResponse? handleResponse,
-    Future<Map<String, String>> Function()? baseHeaders,
+    FutureOr<Map<String, String>> Function()? baseHeaders,
     Client? innerClient,
   }) =>
       CoderHttpClient(
@@ -48,7 +48,7 @@ class CoderHttpClient {
 
   /// Does the same as [CoderHttpClient.createDefault] but also adds the use of the [defaultHandleResponse] that handles the response codes 400, 404 and 500.
   factory CoderHttpClient.createDefaultWithHandleResponse({
-    Future<Map<String, String>> Function()? baseHeaders,
+    FutureOr<Map<String, String>> Function()? baseHeaders,
     Client? innerClient,
     required String Function(Map<String, dynamic> json) get400Message,
   }) =>

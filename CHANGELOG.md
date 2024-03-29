@@ -1,3 +1,7 @@
+## 1.10.2
+
+- slight bug fix with custom http client create functions.
+
 ## 1.10.1
 
 - slight change to how base headers are accepted for the [CoderHttpClient]. It now takes a [FutureOr] rather than a [Future]
