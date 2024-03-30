@@ -1,3 +1,7 @@
+## 1.10.3
+
+- added [addOrUpdate] function to list extensions.
+
 ## 1.10.2
 
 - slight bug fix with custom http client create functions.

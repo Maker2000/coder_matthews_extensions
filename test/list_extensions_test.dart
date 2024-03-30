@@ -171,4 +171,14 @@ void main() {
     var t = sortedIntList.first;
     expect(null, t);
   });
+
+  test('shouldAddOrUpdate', () {
+    var list = [(1, "hello"), (2, "welcome")];
+    var itemToAdd = (3, "it's here");
+    var itemToReplace = (1, "it's going well");
+    list.addOrUpdate((x) => x.$1 == itemToAdd.$1, itemToAdd);
+    expect(list, [(1, "hello"), (2, "welcome"), (3, "it's here")]);
+    list.addOrUpdate((x) => x.$1 == itemToReplace.$1, itemToReplace);
+    expect(list, [(1, "it's going well"), (2, "welcome"), (3, "it's here")]);
+  });
 }

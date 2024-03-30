@@ -326,6 +326,19 @@ extension NullableListExtn2<T> on Iterable<T?>? {
   }
 }
 
+extension NullableListExtn3<T> on List<T>? {
+  /// Adds an element or updates en element should it be found
+  void addOrUpdate(bool Function(T x) op, T element, [bool addToEnd = true]) {
+    var index = this!.indexWhere(op);
+    if (index < 0) {
+      addToEnd ? this!.add(element) : this!.insert(0, element);
+    } else {
+      this!.removeAt(index);
+      this!.insert(index, element);
+    }
+  }
+}
+
 extension StringListExn on Iterable<String> {
   /// Checks if this Iterable of string contains a string [element] while ignoring the case
   bool containsIgnoreCase(String? element, [bool trim = true]) {
