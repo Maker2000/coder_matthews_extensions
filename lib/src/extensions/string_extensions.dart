@@ -9,8 +9,14 @@ extension StringExtn on String? {
   ///Returns a bool whether string value is null or empty
   bool get isNullOrEmpty => this?.isEmpty ?? true;
 
+  ///Returns a bool whether string value is null or empty whitespace
+  bool get isNullOrEmptyWhiteSpace => this?.trim().isEmpty ?? true;
+
   /// Returns a bool value whether string value is not null or empty
   bool get isNotNullOrEmpty => this?.isNotEmpty ?? false;
+
+  /// Returns a bool value whether string value is not null or empty white space
+  bool get isNotNullOrEmptyWhiteSpace => this?.trim().isNotEmpty ?? false;
 
   /// Returns the sentence case of this string value.
   /// Example:

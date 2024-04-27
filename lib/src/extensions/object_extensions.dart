@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'list_extensions.dart';
 
-extension ObjectExn on Object? {
+extension ObjectExn<T extends Object?> on T? {
   bool get isNull => this == null;
   bool get isNotNull => this != null;
   bool get isPrimitiveDataType {
@@ -14,6 +16,12 @@ extension ObjectExn on Object? {
         return false;
     }
   }
+
+  Future<T?> toCompletedFuture() => Future.value(this);
+}
+
+extension ObjectExn2<T extends Object> on T {
+  Future<T> toCompletedFuture() => Future.value(this);
 }
 
 extension FutureExn<T> on Future<T?> {

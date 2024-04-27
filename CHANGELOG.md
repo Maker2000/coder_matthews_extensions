@@ -1,3 +1,15 @@
+## 1.11.0
+
+- add a new set of extensions for files. Includes the following functions: (check the in code documentation for their uses)
+
+  - [sizeInGb]
+  - [sizeInMb]
+  - [sizeInKb]
+  - [sizeInBytes]
+  - [fileSizeDescription]
+
+- added [isNotNullOrEmptyWhiteSpace] and [isNullOrEmptyWhiteSpace] to string extensions.
+
 ## 1.10.3
 
 - added [addOrUpdate] function to list extensions.

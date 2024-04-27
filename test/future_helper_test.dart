@@ -28,4 +28,10 @@ void main() {
     expect(testNumber, numberRes2);
     expect(list1, controlList);
   });
+  test('shouldCreateCompletedFuture', () async {
+    int? nullValue;
+    var nonNullValue = 10;
+    expect(null, await nullValue.toCompletedFuture());
+    expect(10, await nonNullValue.toCompletedFuture());
+  });
 }

@@ -7,3 +7,4 @@ export './material_extensions/material_extensions.dart';
 export './object_extensions.dart';
 export './string_extensions.dart';
 export './color_extensions.dart';
+export './file_extensions.dart';

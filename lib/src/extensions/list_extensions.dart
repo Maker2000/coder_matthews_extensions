@@ -328,7 +328,7 @@ extension NullableListExtn2<T> on Iterable<T?>? {
 
 extension NullableListExtn3<T> on List<T>? {
   /// Adds an element or updates en element should it be found
-  void addOrUpdate(bool Function(T x) op, T element, [bool addToEnd = true]) {
+  void addOrUpdate(bool Function(T element) op, T element, [bool addToEnd = true]) {
     var index = this!.indexWhere(op);
     if (index < 0) {
       addToEnd ? this!.add(element) : this!.insert(0, element);
