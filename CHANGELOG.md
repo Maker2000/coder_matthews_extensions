@@ -1,3 +1,7 @@
+## 1.11.2
+
+- added [toListNotNull] and [toListEmptyWhenNull] to object extensions.
+
 ## 1.11.1
 
 - made a change to [ErrorData] onject to allow for a list of additional actions.
