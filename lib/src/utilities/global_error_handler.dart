@@ -128,7 +128,7 @@ class GlobalErrorHandler<T extends ErrorData> {
         controller().onError(errorData.exception);
       }
     }
-    errorData.onError?.call();
+    // errorData.actions.firstOrNull?.op();
   }
 
   void _handleError(Object error, void Function() handleDefault) {

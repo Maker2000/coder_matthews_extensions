@@ -6,6 +6,6 @@ class GlobalErrorData extends ErrorData {
     required super.title,
     required super.exception,
     super.controllerSource,
-    super.onError,
+    super.actions,
   });
 }

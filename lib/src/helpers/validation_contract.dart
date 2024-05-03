@@ -1,45 +1,33 @@
 import '../exceptions/exceptions.dart';
 import '../extensions/object_extensions.dart';
 import '../extensions/string_extensions.dart';
+import 'helpers.dart';
 
 class ValidationContract {
-  static void requires(bool condition, String title, String message) {
-    if (!condition) throw AppException(title, message);
+  /// Takes a bool [condition] and throws an [AppException] if it's false including list of optional error [ErrorDataAction] actions
+  static void requires(bool condition, String title, String message, {List<ErrorDataAction> actions = const []}) {
+    if (!condition) throw AppException(title, message, actions: actions);
   }
 
-  static void requireNotNull<T>(T? val, String title, String message) {
-    if (val.isNull) throw AppException(title, message);
+  /// Takes a nullable [val] and throws an [AppException] if it's null including list of optional error [ErrorDataAction] actions
+  static void requireNotNull<T>(T? val, String title, String message, {List<ErrorDataAction> actions = const []}) {
+    if (val.isNull) throw AppException(title, message, actions: actions);
   }
 
-  static void requireNull<T>(T? val, String title, String message) {
-    if (val.isNotNull) throw AppException(title, message);
+  /// Takes a nullable [val] and throws an [AppException] if it's not null including list of optional error [ErrorDataAction] actions
+  static void requireNull<T>(T? val, String title, String message, {List<ErrorDataAction> actions = const []}) {
+    if (val.isNotNull) throw AppException(title, message, actions: actions);
   }
 
-  static void requireNotNullOrEmpty(String? val, String title, String message) {
-    if (val.isNullOrEmpty) throw AppException(title, message);
+  /// Takes a nullable string [val] and throws an [AppException] if it's null or empty including list of optional error [ErrorDataAction] actions
+  static void requireNotNullOrEmpty(String? val, String title, String message,
+      {List<ErrorDataAction> actions = const []}) {
+    if (val.isNullOrEmpty) throw AppException(title, message, actions: actions);
   }
 
-  static void requireNullOrEmpty(String? val, String title, String message) {
-    if (val.isNotNullOrEmpty) throw AppException(title, message);
-  }
-
-  static void requiresWithCallback(bool condition, String title, String message, void Function() callback) {
-    if (!condition) throw AppException(title, message, callback);
-  }
-
-  static void requireNotNullWithCallback<T>(T? val, String title, String message, void Function() callback) {
-    if (val.isNull) throw AppException(title, message, callback);
-  }
-
-  static void requireNullWithCallback<T>(T? val, String title, String message, void Function() callback) {
-    if (val.isNotNull) throw AppException(title, message, callback);
-  }
-
-  static void requireNotNullOrEmptyWithCallback(String? val, String title, String message, void Function() callback) {
-    if (val.isNullOrEmpty) throw AppException(title, message, callback);
-  }
-
-  static void requireNullOrEmptyWithCallback(String? val, String title, String message, void Function() callback) {
-    if (val.isNotNullOrEmpty) throw AppException(title, message, callback);
+  /// Takes a nullable string [val] and throws an [AppException] if it's not null or empty including list of optional error [ErrorDataAction] actions
+  static void requireNullOrEmpty(String? val, String title, String message,
+      {List<ErrorDataAction> actions = const []}) {
+    if (val.isNotNullOrEmpty) throw AppException(title, message, actions: actions);
   }
 }

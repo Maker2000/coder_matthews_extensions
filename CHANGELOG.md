@@ -1,3 +1,11 @@
+## 1.11.1
+
+- made a change to [ErrorData] onject to allow for a list of additional actions.
+- **BREAKING CHANGE**:
+  - [ErrorData] interface now only accepts a list of error actions.
+  - [AppException] not only accepts a list of [ErrorActions]
+  - validation contracts now accept an optional list of [ErrorActions]
+
 ## 1.11.0
 
 - add a new set of extensions for files. Includes the following functions: (check the in code documentation for their uses)
