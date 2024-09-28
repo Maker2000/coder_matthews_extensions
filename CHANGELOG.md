@@ -1,3 +1,7 @@
+## 1.12.0
+
+- Added a new widget for switching the theme mode. It uses radio buttons
+
 ## 1.11.3
 
 - added a modification to the add or update function. There is a new [modifyElementIfFound] function property.

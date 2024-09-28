@@ -1,8 +1,3 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
-library coder_matthews_extensions;
-
 import 'package:coder_matthews_extensions/coder_matthews_extensions_platform_interface.dart';
 
 export 'src/exceptions/exceptions.dart';

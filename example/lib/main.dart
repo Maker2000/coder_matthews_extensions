@@ -40,13 +40,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  ThemeMode themeMode = ThemeMode.system;
+  void setThemeMode(ThemeMode mode) {
+    setState(() {
+      themeMode = mode;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: themeMode,
+      theme: ThemeData(),
+      darkTheme: ThemeData.dark(),
       navigatorKey: globalErrorHandler.navigationKey,
       initialRoute: "/",
       routes: {
-        "/": (context) => const Home(),
+        "/": (context) => Home(
+              mode: themeMode,
+              setThemeMode: setThemeMode,
+            ),
         "/widget_position_example": (context) => const WidgetPositionExample(),
         "/shimmer_example": (context) => const ShimmerExample(),
       },
@@ -55,7 +68,9 @@ class _MyAppState extends State<MyApp> {
 }
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  final ThemeMode mode;
+  final void Function(ThemeMode mode) setThemeMode;
+  const Home({super.key, required this.mode, required this.setThemeMode});
 
   @override
   State<Home> createState() => _HomeState();
@@ -109,6 +124,11 @@ class _HomeState extends State<Home> {
           children: [
             Text('Running on: $_platformVersion\n'),
             Text(isTablet ? 'This device is a tablet' : 'This device is phone'),
+            ElevatedButton(
+                onPressed: () {
+                  showBottomSheetThemeSwitcher(context, widget.mode, widget.setThemeMode);
+                },
+                child: const Text('Change Theme')),
             ElevatedButton(
                 onPressed: () {
                   showDialog(
