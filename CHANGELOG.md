@@ -1,3 +1,7 @@
+## 1.11.3
+
+- added a modification to the add or update function. There is a new [modifyElementIfFound] function property.
+
 ## 1.11.2
 
 - added [toListNotNull] and [toListEmptyWhenNull] to object extensions.

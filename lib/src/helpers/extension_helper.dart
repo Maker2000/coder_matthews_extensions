@@ -5,11 +5,12 @@ import 'enums.dart';
 
 class ExtensionHelper {
   static int sorter<T>(T? a, T? b, Error toThrow) {
-    if (a is Comparable) return _orderByHelper(a, b).$2 ? _orderByHelper(a, b).$1 : a.compareTo(b);
+    var (compareValue, comparable) = _orderByHelper(a, b);
+    if (a is Comparable) return comparable ? compareValue : a.compareTo(b);
     switch (a) {
       case const (TimeOfDay):
-        if (_orderByHelper(a, b).$2) {
-          return _orderByHelper(a, b).$1;
+        if (comparable) {
+          return compareValue;
         } else {
           var aTime = (a as TimeOfDay).hour + (a).minute / 60;
           var bTime = (b as TimeOfDay).hour + (b).minute / 60;
@@ -17,7 +18,7 @@ class ExtensionHelper {
         }
       default:
         try {
-          return _orderByHelper(a, b).$2 ? _orderByHelper(a, b).$1 : (a as Enum).name.compareTo((b as Enum).name);
+          return comparable ? compareValue : (a as Enum).name.compareTo((b as Enum).name);
         } catch (e) {
           throw toThrow;
         }

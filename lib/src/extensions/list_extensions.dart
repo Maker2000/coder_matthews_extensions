@@ -328,13 +328,16 @@ extension NullableListExtn2<T> on Iterable<T?>? {
 
 extension NullableListExtn3<T> on List<T>? {
   /// Adds an element or updates en element should it be found
-  void addOrUpdate(bool Function(T element) op, T element, [bool addToEnd = true]) {
+  /// The [modifyElementIfFound] function allows you to modify the element thats found in the list rather that replace it with [element]
+  /// leave this function null to just replace the found element with [element]
+  void addOrUpdate(bool Function(T element) op, T element,
+      {T Function(T element)? modifyElementIfFound, bool addToEnd = true}) {
     var index = this!.indexWhere(op);
     if (index < 0) {
       addToEnd ? this!.add(element) : this!.insert(0, element);
     } else {
-      this!.removeAt(index);
-      this!.insert(index, element);
+      var foundItem = this!.removeAt(index);
+      this!.insert(index, modifyElementIfFound != null ? modifyElementIfFound(foundItem) : element);
     }
   }
 }
