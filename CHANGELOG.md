@@ -1,3 +1,7 @@
+## 1.12.1
+
+- Updated dependencies.
+
 ## 1.12.0
 
 - Added a new widget for switching the theme mode. It uses radio buttons
