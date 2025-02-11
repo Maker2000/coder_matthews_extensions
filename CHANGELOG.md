@@ -1,3 +1,7 @@
+## 1.12.2
+
+- Updated android gradle version.
+
 ## 1.12.1
 
 - Updated dependencies.
