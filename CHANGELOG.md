@@ -1,3 +1,7 @@
+## 1.12.4
+
+- Updated packages
+
 ## 1.12.3
 
 - Fixed null issue when trying to get render box.

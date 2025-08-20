@@ -1,7 +1,7 @@
 name: coder_matthews_extensions
 description: A collection of useful extensions used in most of my personal projects
 repository: https://github.com/Maker2000/coder_matthews_extensions
-version: 1.12.3
+version: 1.12.4
 # homepage: https://www.example.com
 
 environment:
@@ -12,11 +12,11 @@ environment:
 #   path: ^1.8.0
 
 dev_dependencies:
-  lints: ^5.0.0
+  lints: ^6.0.0
   test: ^1.16.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 dependencies:
   intl: ^0.20.2
