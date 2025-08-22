@@ -1,3 +1,7 @@
+## 1.12.5
+
+- Updated android gradle files
+
 ## 1.12.4
 
 - Updated packages
